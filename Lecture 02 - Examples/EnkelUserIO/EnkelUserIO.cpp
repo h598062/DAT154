@@ -8,7 +8,7 @@ int main(int argc, char* argv[])
 
     wcout << L"First number: ";
     wcin >> x;
-    wcout << L"Seconf number: ";
+    wcout << L"Second number: ";
     wcin >> y;
     int sum = x + y;
     wcout << L"Sum is: " << sum << endl;
