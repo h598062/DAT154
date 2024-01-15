@@ -4,7 +4,7 @@ project(Lecture01Demo)
 set(CMAKE_CXX_STANDARD 14)
 
 # Add your source files here
-add_executable(Lecture01Demo myprog1.cpp math.cpp)
+add_executable(Lecture01Demo myprog1/myprog1.cpp myprog1/math.cpp)
 
 # Specify the configurations
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Lecture01Demo)
