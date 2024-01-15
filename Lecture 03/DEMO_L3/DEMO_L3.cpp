@@ -11,14 +11,14 @@ int main2();
 int main3();
 int main4();
 int main5();
+
 int main()
 {
 	main1();
-	//main2();
-	//main3();
-	//main4();
-	//main5();
-	
+	main2();
+	main3();
+	main4();
+	main5();
 }
 
 
@@ -26,7 +26,7 @@ int main1()
 {
 	wchar_t s[] = L"Its a nice day, my house is on fire";
 	wchar_t* p = s;
-	int   n = 0;
+	int n = 0;
 	for (; *p != 0; p++)
 	{
 		if (*p == 'e')
@@ -39,25 +39,24 @@ int main1()
 
 int main2()
 {
-    wchar_t s[] = L"Hello World";
-    wchar_t* p = s;
-    while (*p)
-        wcout << *p++ << ',';
-    wcout << endl;
+	wchar_t s[] = L"Hello World";
+	wchar_t* p = s;
+	while (*p)
+		wcout << *p++ << ',';
+	wcout << endl;
 
-    int tab[] = { 0,1,2,3,5,8,-1 };
-    int* pi = tab;
-    while (*pi != -1)
-        wcout << *pi++ << ',';
-    wcout << endl;
+	int tab[] = {0, 1, 2, 3, 5, 8, -1};
+	int* pi = tab;
+	while (*pi != -1)
+		wcout << *pi++ << ',';
+	wcout << endl;
 	return 0;
 }
 
 
-
 int main3()
 {
-	int  tab[4] = { 1,4,9,16 };
+	int tab[4] = {1, 4, 9, 16};
 	int* p = tab; // same as *p=tab;
 
 	wcout << tab[2] << endl;      // Array notation
@@ -70,7 +69,7 @@ int main3()
 
 int main4()
 {
-	int t[] = { 0,1,4,9,16,25,36,49,64,81,100 };
+	int t[] = {0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100};
 	int* pi = t;
 
 	wcout << " Val : " << *pi << " Ptr Adr: " << pi << endl;
@@ -80,10 +79,9 @@ int main4()
 }
 
 
-
-void DoSq(int *px)
+void DoSq(int* px)
 {
-	*px = *px  *  *px;
+	*px = *px * *px;
 }
 
 int main5()
@@ -91,16 +89,12 @@ int main5()
 	int x = 10;
 
 	wcout << "Before x2 : " << x << endl;
-	
+
 	DoSq(&x);
 
 	wcout << "After x2 : " << x << endl;
 	return 0;
 }
-
-
-
-
 
 
 // Ex3F
@@ -282,12 +276,3 @@ int main5()
 //		delete ap[i];
 //
 //}
-
-
-
-
-
-
-
-
-
