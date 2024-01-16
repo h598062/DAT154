@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Task1", "Task1\Task1.vcxproj", "{2BC9F1FA-B75B-471E-B8E4-D0932222A6AA}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Task2", "Task2\Task2.vcxproj", "{34A2ADE4-BEF3-4E86-904D-AF06F4C928AB}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Task3", "Task3\Task3.vcxproj", "{45250CE4-A20D-4B75-A544-9AAE77CE0387}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Task4", "Task4\Task4.vcxproj", "{C24F972F-D6A5-4FFE-A80B-9575D449A763}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2BC9F1FA-B75B-471E-B8E4-D0932222A6AA}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{2BC9F1FA-B75B-471E-B8E4-D0932222A6AA}.Debug|Any CPU.Build.0 = Debug|Win32
+		{2BC9F1FA-B75B-471E-B8E4-D0932222A6AA}.Release|Any CPU.ActiveCfg = Release|Win32
+		{2BC9F1FA-B75B-471E-B8E4-D0932222A6AA}.Release|Any CPU.Build.0 = Release|Win32
+		{34A2ADE4-BEF3-4E86-904D-AF06F4C928AB}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{34A2ADE4-BEF3-4E86-904D-AF06F4C928AB}.Debug|Any CPU.Build.0 = Debug|Win32
+		{34A2ADE4-BEF3-4E86-904D-AF06F4C928AB}.Release|Any CPU.ActiveCfg = Release|Win32
+		{34A2ADE4-BEF3-4E86-904D-AF06F4C928AB}.Release|Any CPU.Build.0 = Release|Win32
+		{45250CE4-A20D-4B75-A544-9AAE77CE0387}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{45250CE4-A20D-4B75-A544-9AAE77CE0387}.Debug|Any CPU.Build.0 = Debug|Win32
+		{45250CE4-A20D-4B75-A544-9AAE77CE0387}.Release|Any CPU.ActiveCfg = Release|Win32
+		{45250CE4-A20D-4B75-A544-9AAE77CE0387}.Release|Any CPU.Build.0 = Release|Win32
+		{C24F972F-D6A5-4FFE-A80B-9575D449A763}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{C24F972F-D6A5-4FFE-A80B-9575D449A763}.Debug|Any CPU.Build.0 = Debug|Win32
+		{C24F972F-D6A5-4FFE-A80B-9575D449A763}.Release|Any CPU.ActiveCfg = Release|Win32
+		{C24F972F-D6A5-4FFE-A80B-9575D449A763}.Release|Any CPU.Build.0 = Release|Win32
+	EndGlobalSection
+EndGlobal
