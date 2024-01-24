@@ -12,6 +12,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Task5", "Task5\Task5.vcxpro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Task6", "Task6\Task6.vcxproj", "{2409291D-C0FD-408B-AEE5-C02762CE024F}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Task7", "Task7\Task7.vcxproj", "{3EF76B9B-8EAE-4409-A40A-9AFC42DAF92C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{2409291D-C0FD-408B-AEE5-C02762CE024F}.Debug|Any CPU.Build.0 = Debug|Win32
 		{2409291D-C0FD-408B-AEE5-C02762CE024F}.Release|Any CPU.ActiveCfg = Release|Win32
 		{2409291D-C0FD-408B-AEE5-C02762CE024F}.Release|Any CPU.Build.0 = Release|Win32
+		{3EF76B9B-8EAE-4409-A40A-9AFC42DAF92C}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{3EF76B9B-8EAE-4409-A40A-9AFC42DAF92C}.Debug|Any CPU.Build.0 = Debug|Win32
+		{3EF76B9B-8EAE-4409-A40A-9AFC42DAF92C}.Release|Any CPU.ActiveCfg = Release|Win32
+		{3EF76B9B-8EAE-4409-A40A-9AFC42DAF92C}.Release|Any CPU.Build.0 = Release|Win32
 	EndGlobalSection
 EndGlobal

@@ -9,7 +9,7 @@ typedef vector<wstring> Words;
 
 int main(int argc, char* argv[])
 {
-    wcout << L"Please write words to be sorted, one word per line. Send an empty line to stop." << L"\n";
+    wcout << L"Please write words to be sorted, one word per line. Send an empty line to stop.\n";
 	Words words;
     while (true)
     {
@@ -25,7 +25,7 @@ int main(int argc, char* argv[])
 
     sort(words.begin(), words.end());
 	wcout << L"Sorted alpabetically:\n";
-	for (vector<wstring>::iterator i = words.begin(); i < words.end(); ++i)
+	for (Words::iterator i = words.begin(); i < words.end(); ++i)
 	{
 		wcout << *i << L"\n";
 	}
