@@ -134,6 +134,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Part1.cpp" />
+    <ClCompile Include="TrafficLight.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Part1.rc" />

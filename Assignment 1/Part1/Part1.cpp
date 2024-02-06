@@ -4,6 +4,8 @@
 #include "framework.h"
 #include "Part1.h"
 
+#include "TrafficLight.cpp"
+
 #define MAX_LOADSTRING 100
 
 // Global Variables:
@@ -17,6 +19,12 @@ BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
+// Traffic light vars
+TrafficLight* tl1;
+TrafficLight* tl2;
+TrafficLight* tl3;
+TrafficLight* tl4;
+
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
 	_In_ LPWSTR    lpCmdLine,
@@ -26,6 +34,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
 	// TODO: Place code here.
+
+	tl1 = new TrafficLight(TLState::STOP, 100, 100, TLDir::VERTICAL);
+	tl2 = new TrafficLight(TLState::READY, 400, 100, TLDir::VERTICAL);
+	tl3 = new TrafficLight(TLState::GO, 700, 100, TLDir::HORIZONTAL);
+	tl4 = new TrafficLight(TLState::SLOW, 700, 500, TLDir::HORIZONTAL);
 
 	// Initialize global strings
 	LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
@@ -142,47 +155,38 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		}
 	}
 	break;
+	case WM_LBUTTONDOWN:
+	{
+		tl1->changeState();
+		tl2->changeState();
+		tl3->changeState();
+		tl4->changeState();
+		InvalidateRect(hWnd, NULL, TRUE);
+	}
+	break;
 	case WM_PAINT:
 	{
 		PAINTSTRUCT ps;
 		HDC hdc = BeginPaint(hWnd, &ps);
-		// GDI logic for creating a brush
-		HBRUSH  hBrush = CreateSolidBrush(RGB(0, 0, 0));
-		HGDIOBJ hOrg = SelectObject(hdc, hBrush);
 
-		int circPosX = 100;
-		int circPosY = 100;
-		int circleSize = 100;
-		int spacing = 25;
+		// Draw traffic lights
+		tl1->draw(hdc);
+		tl2->draw(hdc);
+		tl3->draw(hdc);
+		tl4->draw(hdc);
 
-
-		// Bakground rectangle
-		Rectangle(hdc, circPosX - spacing, circPosY - spacing, circPosX + circleSize + spacing, circPosY + (3*circleSize) + (3*spacing));
-		DeleteObject(hBrush);
-		// Red lamp (circle)
-		hBrush = CreateSolidBrush(RGB(255, 0, 0));
-		hOrg = SelectObject(hdc, hBrush);
-		Ellipse(hdc, circPosX, circPosY, circPosX + circleSize, circPosY + circleSize);
-		DeleteObject(hBrush);
-		// Yellow lamp (circle)
-		hBrush = CreateSolidBrush(RGB(255, 255, 0));
-		hOrg = SelectObject(hdc, hBrush);
-		circPosY = circPosY + circleSize + spacing;
-		Ellipse(hdc, circPosX, circPosY, circPosX + circleSize, circPosY + circleSize);
-		DeleteObject(hBrush);
-		// Green lamp (circle)
-		hBrush = CreateSolidBrush(RGB(0, 255, 0));
-		hOrg = SelectObject(hdc, hBrush);
-		circPosY = circPosY + circleSize + spacing;
-		Ellipse(hdc, circPosX, circPosY, circPosX + circleSize, circPosY + circleSize);
-
-		// Cleanup, set back original brush
-		SelectObject(hdc, hOrg);
-		DeleteObject(hBrush);
 		EndPaint(hWnd, &ps);
 	}
 	break;
 	case WM_DESTROY:
+		tl1->cleanUp();
+		tl2->cleanUp();
+		tl3->cleanUp();
+		tl4->cleanUp();
+		delete tl1;
+		delete tl2;
+		delete tl3;
+		delete tl4;
 		PostQuitMessage(0);
 		break;
 	default:
