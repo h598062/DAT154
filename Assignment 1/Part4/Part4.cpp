@@ -269,6 +269,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				break;
 			case 2:
 				{
+					/*
+					TODO: Update logic for moving cars
+					maybe use the deques to store "new" cars to appear
+					the road should likely be an indexed array or vector, atleast the part leading up to the intersection
+					this way its easy to prevent a collision by checking if the next pos has a car or not
+					then each car can keep moving every timer iteration, until there is a car in front or red light
+					the red light should be checked at a certain position
+					then it can also have collision detection in the intersection,
+					if the center position get pushed to both road arrays
+					a new car should be added to the road if there is room, else added to deque (maybe limit this?)
+					*/
 					if (tl1->canDrive())
 					{
 						// flytter horisontale biler
