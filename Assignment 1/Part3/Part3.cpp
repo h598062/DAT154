@@ -14,35 +14,28 @@ WCHAR szTitle[MAX_LOADSTRING];                  // The title bar text
 WCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
 
 // Forward declarations of functions included in this code module:
-ATOM                MyRegisterClass(HINSTANCE hInstance);
-BOOL                InitInstance(HINSTANCE, int);
-LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
-INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
+ATOM MyRegisterClass(HINSTANCE hInstance);
+BOOL InitInstance(HINSTANCE, int);
+LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+INT_PTR CALLBACK About(HWND, UINT, WPARAM, LPARAM);
 
 // Traffic light vars
 TrafficLight* tl1;
 TrafficLight* tl2;
 
-int roadHori = 500;
-int roadHoriLength = 1850;
-int roadVert = 900;
-int roadVertLength = 900;
+HBRUSH whiteBrush;
 
 HBRUSH roadBrush;
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
-	_In_opt_ HINSTANCE hPrevInstance,
-	_In_ LPWSTR    lpCmdLine,
-	_In_ int       nCmdShow)
+                      _In_opt_ HINSTANCE hPrevInstance,
+                      _In_ LPWSTR lpCmdLine,
+                      _In_ int nCmdShow)
 {
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
 	// TODO: Place code here.
-
-	tl1 = new TrafficLight(TLState::GO, roadVert - 100, 280, TLDir::VERTICAL);
-	tl2 = new TrafficLight(TLState::STOP, 680, roadHori + 80, TLDir::HORIZONTAL);
-	roadBrush = CreateSolidBrush(RGB(100, 100, 100));
 
 	// Initialize global strings
 	LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
@@ -71,7 +64,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	return (int)msg.wParam;
 }
-
 
 
 //
@@ -115,7 +107,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 	hInst = hInstance; // Store instance handle in our global variable
 
 	HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-		CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+	                          CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 
 	if (!hWnd)
 	{
@@ -143,52 +135,86 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	switch (message)
 	{
 	case WM_CREATE:
-	{
-		SetTimer(hWnd, 0, 1000, NULL);
-	}
-	break;
-	case WM_COMMAND:
-	{
-		int wmId = LOWORD(wParam);
-		// Parse the menu selections:
-		switch (wmId)
 		{
-		case IDM_ABOUT:
-			DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
-			break;
-		case IDM_EXIT:
-			DestroyWindow(hWnd);
-			break;
-		default:
-			return DefWindowProc(hWnd, message, wParam, lParam);
+			tl1 = new TrafficLight(TLState::GO, 0, 0, TLDir::VERTICAL);
+			tl2 = new TrafficLight(TLState::STOP, 0, 0, TLDir::HORIZONTAL);
+			roadBrush = CreateSolidBrush(RGB(100, 100, 100));
+			whiteBrush = CreateSolidBrush(RGB(255, 255, 255));
+			SetTimer(hWnd, 0, 1000, NULL);
 		}
-	}
-	break;
+		break;
+	case WM_COMMAND:
+		{
+			int wmId = LOWORD(wParam);
+			// Parse the menu selections:
+			switch (wmId)
+			{
+			case IDM_ABOUT:
+				DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
+				break;
+			case IDM_EXIT:
+				DestroyWindow(hWnd);
+				break;
+			default:
+				return DefWindowProc(hWnd, message, wParam, lParam);
+			}
+		}
+		break;
 	case WM_TIMER:
-	{
-		tl1->changeState();
-		tl2->changeState();
-		InvalidateRect(hWnd, NULL, true);
-	}
-	break;
+		{
+			tl1->changeState();
+			tl2->changeState();
+			InvalidateRect(hWnd, NULL, true);
+		}
+		break;
 	case WM_PAINT:
-	{
-		PAINTSTRUCT ps;
-		HDC hdc = BeginPaint(hWnd, &ps);
+		{
+			PAINTSTRUCT ps;
+			HDC phdc = BeginPaint(hWnd, &ps);
+			RECT screen;
+			GetClientRect(hWnd, &screen);
 
-		// Draw roads
-		HGDIOBJ hOrg = SelectObject(hdc, roadBrush);
-		Rectangle(hdc, 50, roadHori, roadHoriLength, roadHori + 50);
-		Rectangle(hdc, roadVert, 50, roadVert + 50, roadVertLength);
-		SelectObject(hdc, hOrg);
+			// Making our virtual device context and bitmap
+			HDC hdc = CreateCompatibleDC(phdc);
+			HBITMAP bmp = CreateCompatibleBitmap(phdc, screen.right, screen.bottom);
+			SelectObject(hdc, bmp);
 
-		// Draw traffic lights
-		tl1->draw(hdc);
-		tl2->draw(hdc);
+			// Select the white brush
+			SelectObject(hdc, whiteBrush);
 
-		EndPaint(hWnd, &ps);
-	}
-	break;
+			// Notice all drawing operations go to our virtual device context
+			Rectangle(hdc, 0, 0, screen.right, screen.bottom);
+
+			// Draw roads
+			HGDIOBJ hOrg = SelectObject(hdc, roadBrush);
+			// Draw horizontal road
+			Rectangle(hdc, 0, screen.bottom / 2, screen.right, (screen.bottom / 2) + 100);
+			// Draw vertical road
+			Rectangle(hdc, screen.right / 2, 0, (screen.right / 2) + 100, screen.bottom);
+			// Restore original brush
+			SelectObject(hdc, hOrg);
+
+			tl1->setPos(screen.right / 2 - 100, screen.bottom / 2 - 220);
+			tl2->setPos(screen.right / 2 + 140, screen.bottom / 2 + 140);
+
+			// Draw traffic lights
+			tl1->draw(hdc);
+			tl2->draw(hdc);
+
+			// One single copy operation copies everything from the virtual context to the
+			// physical one
+			BitBlt(phdc, 0, 0, screen.right, screen.bottom, hdc, 0, 0, SRCCOPY);
+
+			// Cleaning up our virtual context. For better program performance,
+			// We might consider just keeping these around instead of creating new ones and
+			// deleting at every WM_PAINT call, but if so, be sure that you reuse the existing
+			// ones and not just keep making new ones
+			DeleteObject(bmp);
+			DeleteDC(hdc);
+
+			EndPaint(hWnd, &ps);
+		}
+		break;
 	case WM_DESTROY:
 		tl1->cleanUp();
 		tl2->cleanUp();
