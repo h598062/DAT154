@@ -19,14 +19,6 @@ BOOL InitInstance(HINSTANCE, int);
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK About(HWND, UINT, WPARAM, LPARAM);
 
-// Traffic light vars
-TrafficLight* tl1;
-TrafficLight* tl2;
-
-HBRUSH whiteBrush;
-
-HBRUSH roadBrush;
-
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                       _In_opt_ HINSTANCE hPrevInstance,
                       _In_ LPWSTR lpCmdLine,
@@ -120,6 +112,18 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 	return TRUE;
 }
 
+// My Global variables
+
+// Vertical trafficlight
+TrafficLight* tl1;
+// Horizontal trafficlight
+TrafficLight* tl2;
+
+HBRUSH whiteBrush;
+HBRUSH roadBrush;
+
+HPEN noPen;
+
 int tlStateTeller = 0;
 bool driveHorizontally = true;
 
@@ -139,10 +143,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 	case WM_CREATE:
 		{
-			tl1 = new TrafficLight(TLState::GO, 0, 0, TLDir::VERTICAL);
-			tl2 = new TrafficLight(TLState::STOP, 0, 0, TLDir::HORIZONTAL);
+			tl1 = new TrafficLight(TLState::GO, TLDir::VERTICAL);
+			tl2 = new TrafficLight(TLState::STOP, TLDir::HORIZONTALFLIPPED);
 			roadBrush = CreateSolidBrush(RGB(100, 100, 100));
 			whiteBrush = CreateSolidBrush(RGB(255, 255, 255));
+			noPen = CreatePen(PS_NULL, 0, RGB(0, 0, 0));
 
 			// timer for å bytte hvilken retning som er rød / grønn
 			SetTimer(hWnd, 0, 10000, NULL);
@@ -237,47 +242,58 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_PAINT:
 		{
 			PAINTSTRUCT ps;
-			HDC phdc = BeginPaint(hWnd, &ps);
+			HDC hdc = BeginPaint(hWnd, &ps);
 			RECT screen;
 			GetClientRect(hWnd, &screen);
 
 			// Making our virtual device context and bitmap
-			HDC hdc = CreateCompatibleDC(phdc);
-			HBITMAP bmp = CreateCompatibleBitmap(phdc, screen.right, screen.bottom);
-			SelectObject(hdc, bmp);
+			HDC vdc = CreateCompatibleDC(hdc);
+			HBITMAP bmp = CreateCompatibleBitmap(hdc, screen.right, screen.bottom);
+			SelectObject(vdc, bmp);
 
 			// Select the white brush
-			SelectObject(hdc, whiteBrush);
+			HGDIOBJ orgBrush = SelectObject(vdc, whiteBrush);
 
 			// Notice all drawing operations go to our virtual device context
-			Rectangle(hdc, 0, 0, screen.right, screen.bottom);
+			Rectangle(vdc, 0, 0, screen.right, screen.bottom);
 
 			// Draw roads
-			HGDIOBJ hOrg = SelectObject(hdc, roadBrush);
-			// Draw horizontal road
-			Rectangle(hdc, 0, screen.bottom / 2, screen.right, (screen.bottom / 2) + 100);
-			// Draw vertical road
-			Rectangle(hdc, screen.right / 2, 0, (screen.right / 2) + 100, screen.bottom);
-			// Restore original brush
-			SelectObject(hdc, hOrg);
+			// Select wanted pen and brush, and store original pen & brush
+			SelectObject(vdc, roadBrush);
+			HGDIOBJ orgPen = SelectObject(vdc, noPen);
 
-			tl1->setPos(screen.right / 2 - 100, screen.bottom / 2 - 220);
-			tl2->setPos(screen.right / 2 + 140, screen.bottom / 2 + 140);
+			// Draw horizontal road, should be centered in the window
+			Rectangle(vdc, 0, (screen.bottom / 2) - 50, screen.right, (screen.bottom / 2) + 50);
+			// Draw vertical road, should be centered in the window
+			Rectangle(vdc, (screen.right / 2) - 50, 0, (screen.right / 2) + 50, screen.bottom);
+
+			// Restore original pen
+			SelectObject(vdc, orgPen);
+
+			// Code for dynamically updating the position of traffic lights for the window size
+			// traffic light has height and widths of 190 and 70 pixels, and is drawn from top-left position
+			// road is 100 pixels wide, centered on screen so +-50 pixels
+			// i want 10 pixels of buffer from road to traffic light
+			tl1->setPos(screen.right / 2 - 70 - 50 - 10, screen.bottom / 2 - 190 - 50 - 10);
+			tl2->setPos(screen.right / 2 - 190 - 50 - 10, screen.bottom / 2 + 50 + 10);
 
 			// Draw traffic lights
-			tl1->draw(hdc);
-			tl2->draw(hdc);
+			tl1->draw(vdc);
+			tl2->draw(vdc);
+
+			// Restore original brush
+			SelectObject(vdc, orgBrush);
 
 			// One single copy operation copies everything from the virtual context to the
 			// physical one
-			BitBlt(phdc, 0, 0, screen.right, screen.bottom, hdc, 0, 0, SRCCOPY);
+			BitBlt(hdc, 0, 0, screen.right, screen.bottom, vdc, 0, 0, SRCCOPY);
 
 			// Cleaning up our virtual context. For better program performance,
 			// We might consider just keeping these around instead of creating new ones and
 			// deleting at every WM_PAINT call, but if so, be sure that you reuse the existing
 			// ones and not just keep making new ones
 			DeleteObject(bmp);
-			DeleteDC(hdc);
+			DeleteDC(vdc);
 
 			EndPaint(hWnd, &ps);
 		}

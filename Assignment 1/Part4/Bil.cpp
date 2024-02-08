@@ -1,5 +1,4 @@
 #include "framework.h"
-#include "Part4.h"
 
 enum class Colour
 {
@@ -36,11 +35,11 @@ class Bil
 	HBRUSH whiteBrush = CreateSolidBrush(RGB(255, 255, 255));
 
 public:
-	Bil(Colour colour, Direction dir, int x, int y, int size) : colour(colour), dir(dir), x(x), y(y), size(size)
+	Bil(const Colour colour, const Direction dir, const int x, const int y, const int size) : colour(colour), dir(dir), x(x), y(y), size(size)
 	{
 	}
 
-	void draw(HDC& hdc)
+	void draw(const HDC& hdc) const
 	{
 		HGDIOBJ hOrg = SelectObject(hdc, whiteBrush);
 		switch (colour)

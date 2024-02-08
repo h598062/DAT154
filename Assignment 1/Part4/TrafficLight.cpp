@@ -1,5 +1,4 @@
 #include "framework.h"
-#include "Part4.h"
 
 enum class TLState
 {
@@ -12,7 +11,9 @@ enum class TLState
 enum class TLDir
 {
 	VERTICAL,
-	HORIZONTAL
+	VERTICALFLIPPED,
+	HORIZONTAL,
+	HORIZONTALFLIPPED
 };
 
 class TLCircle
@@ -26,22 +27,23 @@ public:
 	int size;
 
 	// Posistion is top left corner
-	TLCircle(int posX, int posY, int size) :
-		top(posY),
-		bottom(posY + size),
-		left(posX),
-		right(posX + size),
+	TLCircle(const int size) :
+		top(0),
+		bottom(0 + size),
+		left(0),
+		right(0 + size),
 		size(size)
 	{
 	}
 
 	// Draw the circle, remember to set brush color before calling this
-	void draw(HDC hdc)
+	void draw(const HDC hdc) const
 	{
 		Ellipse(hdc, left, top, right, bottom);
 	}
 
-	void setPos(int x, int y)
+	// Updates position using top-left positioning
+	void setPos(const int x, const int y)
 	{
 		top = y;
 		bottom = y + size;
@@ -50,6 +52,11 @@ public:
 	}
 };
 
+//
+// Expected width and height
+// Horizontal: 190, 70
+// Vertical:   70, 190
+//
 class TrafficLight
 {
 	TLState state;
@@ -67,11 +74,12 @@ class TrafficLight
 	HBRUSH redBrush = CreateSolidBrush(RGB(255, 0, 0));
 	HBRUSH yellowBrush = CreateSolidBrush(RGB(255, 255, 0));
 	HBRUSH greenBrush = CreateSolidBrush(RGB(0, 255, 0));
-	HBRUSH outlineBrush = CreateSolidBrush(RGB(0, 0, 0));
 	HBRUSH bgBrush = CreateSolidBrush(RGB(50, 50, 50));
 
+	HPEN tlOutlinePen = CreatePen(PS_SOLID, 5, RGB(0, 0, 0));
+
 	// Draw lights on the traffic light
-	void drawLights(HDC& hdc, bool redState, bool yellowState, bool greenState)
+	void drawLights(const HDC& hdc, const bool redState, const bool yellowState, const bool greenState) const
 	{
 		// Draw Red light
 		if (redState)
@@ -107,19 +115,15 @@ class TrafficLight
 		this->green->draw(hdc);
 	}
 
-	void drawTLBox(HDC& hdc)
+	// draw the bg box surrounding the lights
+	void drawTLBox(const HDC& hdc) const
 	{
+		const HGDIOBJ orgPen = SelectObject(hdc, tlOutlinePen);
 		switch (dir)
 		{
 		case TLDir::VERTICAL:
-			// Background frame
-			SelectObject(hdc, outlineBrush);
-			Rectangle(hdc,
-			          posX - 5,
-			          posY - 5,
-			          posX + circleSize + (2 * spacing) + 5,
-			          posY + (3 * circleSize) + (4 * spacing) + 5);
-		// Background rectangle
+		case TLDir::VERTICALFLIPPED:
+			// Background rectangle
 			SelectObject(hdc, bgBrush);
 			Rectangle(hdc,
 			          posX,
@@ -128,14 +132,8 @@ class TrafficLight
 			          posY + (3 * circleSize) + (4 * spacing));
 			break;
 		case TLDir::HORIZONTAL:
-			// Background frame
-			SelectObject(hdc, outlineBrush);
-			Rectangle(hdc,
-			          posX - 5,
-			          posY - 5,
-			          posX + (3 * circleSize) + (4 * spacing) + 5,
-			          posY + circleSize + (2 * spacing) + 5);
-		// Background rectangle
+		case TLDir::HORIZONTALFLIPPED:
+			// Background rectangle
 			SelectObject(hdc, bgBrush);
 			Rectangle(hdc,
 			          posX,
@@ -144,22 +142,24 @@ class TrafficLight
 			          posY + circleSize + (2 * spacing));
 			break;
 		}
+		SelectObject(hdc, orgPen);
 	}
 
 public:
-	// Posistion is top left corner
-	TrafficLight(TLState state, int posX, int posY, TLDir dir) :
+	// Create a traffic light, state is initial state
+	TrafficLight(const TLState state, const TLDir dir) :
 		state(state),
-		posX(posX),
-		posY(posY),
+		posX(0),
+		posY(0),
 		dir(dir)
 	{
-		this->red = new TLCircle(0, 0, circleSize);
-		this->yellow = new TLCircle(0, 0, circleSize);
-		this->green = new TLCircle(0, 0, circleSize);
+		this->red = new TLCircle(circleSize);
+		this->yellow = new TLCircle(circleSize);
+		this->green = new TLCircle(circleSize);
 	}
 
-	void setPos(int x, int y)
+	// Updates the position of the traffic light, position is top-left based
+	void setPos(const int x, const int y)
 	{
 		posX = x;
 		posY = y;
@@ -175,9 +175,20 @@ public:
 			yellow->setPos(posX + (2 * spacing) + circleSize, posY + spacing);
 			green->setPos(posX + (3 * spacing) + (2 * circleSize), posY + spacing);
 			break;
+		case TLDir::VERTICALFLIPPED:
+			green->setPos(posX + spacing, posY + spacing);
+			yellow->setPos(posX + spacing, posY + (2 * spacing) + circleSize);
+			red->setPos(posX + spacing, posY + (3 * spacing) + (2 * circleSize));
+			break;
+		case TLDir::HORIZONTALFLIPPED:
+			green->setPos(posX + spacing, posY + spacing);
+			yellow->setPos(posX + (2 * spacing) + circleSize, posY + spacing);
+			red->setPos(posX + (3 * spacing) + (2 * circleSize), posY + spacing);
+			break;
 		}
 	}
 
+	// Changes the state of the traffic light to its next state
 	void changeState()
 	{
 		switch (state)
@@ -206,7 +217,7 @@ public:
 	}
 
 	// Clean up resources, should be called when object is no longer needed
-	void cleanUp()
+	void cleanUp() const
 	{
 		delete red;
 		delete yellow;
@@ -215,14 +226,14 @@ public:
 		DeleteObject(redBrush);
 		DeleteObject(yellowBrush);
 		DeleteObject(greenBrush);
-		DeleteObject(outlineBrush);
 		DeleteObject(bgBrush);
 	}
 
-	void draw(HDC& hdc)
+	// Draws the complete traffic light, should not make any external changes to brushes etc.
+	void draw(const HDC& hdc) const
 	{
 		// Store original brush
-		HGDIOBJ hOrg = SelectObject(hdc, outlineBrush);
+		const HGDIOBJ hOrg = SelectObject(hdc, bgBrush);
 
 		// Draw the traffic light box
 		drawTLBox(hdc);
