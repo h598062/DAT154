@@ -264,4 +264,22 @@ public:
 		// Cleanup, set back original brush
 		SelectObject(hdc, hOrg);
 	}
+
+	// True or false if a car can drive
+	bool canDrive() const
+	{
+		bool result = false;
+		switch (state)
+		{
+		case TLState::STOP:
+		case TLState::READY:
+			result = false;
+			break;
+		case TLState::GO:
+		case TLState::SLOW:
+			result = true;
+			break;
+		}
+		return result;
+	}
 };

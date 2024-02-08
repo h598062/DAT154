@@ -4,7 +4,12 @@
 #include "framework.h"
 #include "Part4.h"
 
+#include <deque>
+#include <forward_list>
+#include <vector>
+
 #include "TrafficLight.cpp"
+#include "Bil.cpp"
 
 #define MAX_LOADSTRING 100
 
@@ -125,7 +130,42 @@ HBRUSH roadBrush;
 HPEN noPen;
 
 int tlStateTeller = 0;
-bool driveHorizontally = true;
+
+long windowW = 0;
+long windowH = 0;
+
+typedef std::deque<Bil*> biler;
+
+biler hzBiler;
+biler vertBiler;
+biler afterTL;
+BilColour stupid = BilColour::RED;
+
+BilColour nextColour()
+{
+	switch (stupid)
+	{
+	case BilColour::RED:
+		stupid = BilColour::GREEN;
+		return stupid;
+	case BilColour::GREEN:
+		stupid = BilColour::BLUE;
+		return stupid;
+	case BilColour::BLUE:
+		stupid = BilColour::YELLOW;
+		return stupid;
+	case BilColour::YELLOW:
+		stupid = BilColour::BLACK;
+		return stupid;
+	case BilColour::BLACK:
+		stupid = BilColour::WHITE;
+		return stupid;
+	case BilColour::WHITE:
+		stupid = BilColour::RED;
+		return stupid;
+	}
+	return BilColour::RED;
+}
 
 //
 //  FUNCTION: WndProc(HWND, UINT, WPARAM, LPARAM)
@@ -152,8 +192,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			// timer for å bytte hvilken retning som er rød / grønn
 			SetTimer(hWnd, 0, 10000, NULL);
 
-			// timer for å flytte horisontale biler
+			// timer for å flytte biler før lyskryss
 			SetTimer(hWnd, 2, 100, NULL);
+
+			// timer for å flytte biler etter lyskryss
+			SetTimer(hWnd, 3, 100, NULL);
 		}
 		break;
 	case WM_COMMAND:
@@ -171,6 +214,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			default:
 				return DefWindowProc(hWnd, message, wParam, lParam);
 			}
+		}
+		break;
+	case WM_RBUTTONDOWN:
+		{
+			vertBiler.push_back(new Bil(nextColour(), BilDirection::VERTICAL, 15));
+			InvalidateRect(hWnd, NULL, TRUE);
+		}
+		break;
+	case WM_LBUTTONDOWN:
+		{
+			hzBiler.push_back(new Bil(nextColour(), BilDirection::HORIZONTAL, 15));
+			InvalidateRect(hWnd, NULL, TRUE);
 		}
 		break;
 	case WM_TIMER:
@@ -201,19 +256,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 						break;
 					case 2:
 						{
-							if (driveHorizontally)
-							{
-								// timer for å flytte horisontale biler
-								SetTimer(hWnd, 2, 100, NULL);
-								KillTimer(hWnd, 3);
-							}
-							else
-							{
-								// timer for å flytte vertikale biler
-								SetTimer(hWnd, 3, 100, NULL);
-								KillTimer(hWnd, 2);
-							}
-							driveHorizontally = !driveHorizontally;
 							tlStateTeller = 0;
 							KillTimer(hWnd, 1);
 							// timer for å bytte hvilken retning som er rød / grønn
@@ -227,12 +269,82 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				break;
 			case 2:
 				{
-					// flytter horisontale biler
+					if (tl1->canDrive())
+					{
+						// flytter horisontale biler
+						for (const auto bil : hzBiler)
+						{
+							if (bil->pos > windowW)
+							{
+								// litt dumt kanskje, men en bil som e utenfor skal alltid være den første i køen logisk sett
+								hzBiler.pop_front();
+								delete(bil);
+							}
+							else if (bil->pos > windowW / 2)
+							{
+								hzBiler.pop_front();
+								afterTL.push_back(bil);
+								bil->updatePos(10);
+							}
+							else
+							{
+								// move car 10 px
+								bil->updatePos(10);
+							}
+						}
+					}
+					if(tl2->canDrive())
+					{
+						// flytter vertikale biler
+						for (const auto bil : vertBiler)
+						{
+							if (bil->pos > windowH)
+							{
+								// litt dumt kanskje, men en bil so me utenfor skal alltid være den første i køen logisk sett
+								vertBiler.pop_front();
+								delete(bil);
+							}
+							else if (bil->pos > windowH / 2)
+							{
+								vertBiler.pop_front();
+								afterTL.push_back(bil);
+								bil->updatePos(10);
+							}
+							else
+							{
+								// move car 10 px
+								bil->updatePos(10);
+							}
+						}
+					}
+					InvalidateRect(hWnd, NULL, false);
 				}
 				break;
 			case 3:
 				{
-					// flytter vertikale biler
+					for (const auto bil : afterTL)
+					{
+						bil->updatePos(10);
+						if (bil->dir == BilDirection::HORIZONTAL)
+						{
+							if (bil->pos > windowW)
+							{
+								// litt dumt kanskje, men en bil som e utenfor skal alltid være den første i køen logisk sett
+								afterTL.pop_front();
+								delete(bil);
+							}
+						}
+						else
+						{
+							if (bil->pos > windowH)
+							{
+								// litt dumt kanskje, men en bil som e utenfor skal alltid være den første i køen logisk sett
+								afterTL.pop_front();
+								delete(bil);
+							}
+						}
+					}
+					InvalidateRect(hWnd, NULL, false);
 				}
 				break;
 			default: break;
@@ -245,6 +357,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			HDC hdc = BeginPaint(hWnd, &ps);
 			RECT screen;
 			GetClientRect(hWnd, &screen);
+
+			windowH = screen.bottom;
+			windowW = screen.right;
 
 			// Making our virtual device context and bitmap
 			HDC vdc = CreateCompatibleDC(hdc);
@@ -280,6 +395,25 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			// Draw traffic lights
 			tl1->draw(vdc);
 			tl2->draw(vdc);
+
+			for (auto bil : hzBiler)
+			{
+				bil->draw(vdc, screen.bottom / 2);
+			}
+			for (auto bil : vertBiler)
+			{
+				bil->draw(vdc, screen.right / 2);
+			}
+			for (auto bil : afterTL)
+			{
+				if (bil->dir == BilDirection::VERTICAL)
+				{
+					bil->draw(vdc, screen.right / 2);
+				} else
+				{
+					bil->draw(vdc, screen.bottom / 2);
+				}
+			}
 
 			// Restore original brush
 			SelectObject(vdc, orgBrush);

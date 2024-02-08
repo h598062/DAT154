@@ -1,6 +1,6 @@
 #include "framework.h"
 
-enum class Colour
+enum class BilColour
 {
 	RED,
 	GREEN,
@@ -10,7 +10,7 @@ enum class Colour
 	WHITE
 };
 
-enum class Direction
+enum class BilDirection
 {
 	HORIZONTAL,
 	VERTICAL
@@ -18,11 +18,7 @@ enum class Direction
 
 class Bil
 {
-	Colour colour;
-	Direction dir;
-
-	// position is the relevant position on the road line, dependant on Direction
-	int x, y;
+	BilColour colour;
 
 	// size is 1x width, 2x height
 	int size;
@@ -35,42 +31,51 @@ class Bil
 	HBRUSH whiteBrush = CreateSolidBrush(RGB(255, 255, 255));
 
 public:
-	Bil(const Colour colour, const Direction dir, const int x, const int y, const int size) : colour(colour), dir(dir), x(x), y(y), size(size)
+	// position is the relevant position on the road line, dependant on Direction
+	BilDirection dir;
+	int pos;
+	
+	Bil(const BilColour colour, const BilDirection dir, const int size) : colour(colour), dir(dir), pos(0), size(size)
 	{
 	}
 
-	void draw(const HDC& hdc) const
+	void updatePos(const int movement)
 	{
-		HGDIOBJ hOrg = SelectObject(hdc, whiteBrush);
+		pos += movement;
+	}
+
+	void draw(const HDC& hdc, const int line) const
+	{
+		const HGDIOBJ hOrg = SelectObject(hdc, whiteBrush);
 		switch (colour)
 		{
-		case Colour::RED:
+		case BilColour::RED:
 			SelectObject(hdc, redBrush);
 			break;
-		case Colour::YELLOW:
+		case BilColour::YELLOW:
 			SelectObject(hdc, yellowBrush);
 			break;
-		case Colour::GREEN:
+		case BilColour::GREEN:
 			SelectObject(hdc, greenBrush);
 			break;
-		case Colour::BLUE:
+		case BilColour::BLUE:
 			SelectObject(hdc, blueBrush);
 			break;
-		case Colour::BLACK:
+		case BilColour::BLACK:
 			SelectObject(hdc, blackBrush);
 			break;
-		case Colour::WHITE:
+		case BilColour::WHITE:
 			SelectObject(hdc, whiteBrush);
 			break;
 		}
 
 		switch (dir)
 		{
-		case Direction::HORIZONTAL:
-			Rectangle(hdc, x, y, x + size, y + (size * 2));
+		case BilDirection::HORIZONTAL:
+			Rectangle(hdc, pos - size, line - (size/2), pos + size, line + (size/2));
 			break;
-		case Direction::VERTICAL:
-			Rectangle(hdc, x, y, x + (size * 2), y + size);
+		case BilDirection::VERTICAL:
+			Rectangle(hdc, line - (size/2), pos - size, line + (size/2), pos + size);
 			break;
 		}
 		SelectObject(hdc, hOrg);
