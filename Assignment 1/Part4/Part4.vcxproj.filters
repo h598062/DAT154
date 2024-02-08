@@ -32,6 +32,12 @@
     <ClCompile Include="Part4.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Bil.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TrafficLight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Part4.rc">
