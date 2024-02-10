@@ -27,6 +27,12 @@
     <ClInclude Include="Part4.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Bil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TrafficLight.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Part4.cpp">
