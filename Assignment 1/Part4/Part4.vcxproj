@@ -127,10 +127,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Bil.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Part4.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TrafficLight.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bil.cpp" />
