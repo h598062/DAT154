@@ -59,14 +59,6 @@ class TrafficLight
 	TLCircle* yellow;
 	TLCircle* green;
 
-	HBRUSH offBrush = CreateSolidBrush(RGB(180, 180, 180));
-	HBRUSH redBrush = CreateSolidBrush(RGB(255, 0, 0));
-	HBRUSH yellowBrush = CreateSolidBrush(RGB(255, 255, 0));
-	HBRUSH greenBrush = CreateSolidBrush(RGB(0, 255, 0));
-	HBRUSH bgBrush = CreateSolidBrush(RGB(50, 50, 50));
-
-	HPEN tlOutlinePen = CreatePen(PS_SOLID, 5, RGB(0, 0, 0));
-
 	// Draw lights on the traffic light
 	void drawLights(const HDC& hdc, const bool redState, const bool yellowState, const bool greenState) const;
 	// draw the bg box surrounding the lights

@@ -1,5 +1,6 @@
 #include "Windows.h"
 #include "Bil.h"
+#include "ColourBrushes.h"
 
 
 Bil::Bil(const BilColour colour, const BilDirection dir, const int size) :

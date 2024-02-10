@@ -8,6 +8,7 @@
 #include <forward_list>
 #include <vector>
 
+#include "ColourBrushes.h"
 #include "TrafficLight.h"
 #include "Bil.h"
 
@@ -122,11 +123,6 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 TrafficLight* tl1;
 // Horizontal trafficlight
 TrafficLight* tl2;
-
-HBRUSH whiteBrush;
-HBRUSH roadBrush;
-
-HPEN noPen;
 
 // variable for counting the state for the traffic lights
 int tlStateTeller = 0;
@@ -442,9 +438,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			tl1 = new TrafficLight(TLState::GO, TLDir::VERTICAL, 0);
 			tl2 = new TrafficLight(TLState::STOP, TLDir::HORIZONTALFLIPPED, 0);
-			roadBrush = CreateSolidBrush(RGB(100, 100, 100));
-			whiteBrush = CreateSolidBrush(RGB(255, 255, 255));
-			noPen = CreatePen(PS_NULL, 0, RGB(0, 0, 0));
 
 			// timer for å bytte hvilken retning som er rød / grønn
 			SetTimer(hWnd, 0, 10000, NULL);

@@ -1,5 +1,6 @@
 #include "Windows.h"
 #include "TrafficLight.h"
+#include "ColourBrushes.h"
 
 // TLCircle
 void TLCircle::draw(const HDC hdc) const

@@ -128,6 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Bil.h" />
+    <ClInclude Include="ColourBrushes.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Part4.h" />
     <ClInclude Include="Resource.h" />
@@ -136,6 +137,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bil.cpp" />
+    <ClCompile Include="ColourBrushes.cpp" />
     <ClCompile Include="Part4.cpp" />
     <ClCompile Include="TrafficLight.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
