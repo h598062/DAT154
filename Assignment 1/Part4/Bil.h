@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "framework.h"
+#include "Windows.h"
 
 enum class BilColour
 {
@@ -22,15 +22,17 @@ class Bil
 {
 	BilColour colour;
 
-	HBRUSH redBrush;
-	HBRUSH yellowBrush;
-	HBRUSH greenBrush;
-	HBRUSH blueBrush;
-	HBRUSH blackBrush;
-	HBRUSH whiteBrush;
+	HBRUSH redBrush = CreateSolidBrush(RGB(255, 0, 0));
+	HBRUSH yellowBrush = CreateSolidBrush(RGB(255, 255, 0));
+	HBRUSH greenBrush = CreateSolidBrush(RGB(0, 255, 0));
+	HBRUSH blueBrush = CreateSolidBrush(RGB(0, 0, 255));
+	HBRUSH blackBrush = CreateSolidBrush(RGB(0, 0, 0));
+	HBRUSH whiteBrush = CreateSolidBrush(RGB(255, 255, 255));
 
 public:
+	// size is 1x width, 2x height
 	int size;
+	// position is the relevant position on the road line, dependant on Direction
 	BilDirection dir;
 	int pos;
 	bool invalid;

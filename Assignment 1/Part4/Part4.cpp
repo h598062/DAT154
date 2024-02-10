@@ -130,6 +130,7 @@ HPEN noPen;
 
 // variable for counting the state for the traffic lights
 int tlStateTeller = 0;
+bool isHz = false;
 
 typedef std::deque<Bil*> biler;
 
@@ -270,27 +271,74 @@ void moveCarsAfterTL(HWND hWnd)
 
 void changeTLStates(HWND hWnd)
 {
-	switch (tlStateTeller)
+	if (isHz)
 	{
-	case 0:
-	case 1:
+		switch (tlStateTeller)
 		{
-			// endre state for trafikklys
-			tl1->changeState();
-			tl2->changeState();
-			++tlStateTeller;
+		case 0:
+			{
+				tl2->changeState();
+				++tlStateTeller;
+			}
+			break;
+		case 1:
+			{
+				tl2->changeState();
+				tl1->changeState();
+				++tlStateTeller;
+			}
+			break;
+		case 2:
+			{
+				tl1->changeState();
+				++tlStateTeller;
+			}
+			break;
+		case 3:
+			{
+				tlStateTeller = 0;
+				KillTimer(hWnd, 1);
+				// timer for å bytte hvilken retning som er rød / grønn
+				SetTimer(hWnd, 0, 10000, NULL);
+			}
+			break;
+		default: break;
 		}
-		break;
-	case 2:
+	} else
+	{
+		switch (tlStateTeller)
 		{
-			tlStateTeller = 0;
-			KillTimer(hWnd, 1);
-			// timer for å bytte hvilken retning som er rød / grønn
-			SetTimer(hWnd, 0, 10000, NULL);
+		case 0:
+			{
+				tl1->changeState();
+				++tlStateTeller;
+			}
+			break;
+		case 1:
+			{
+				tl1->changeState();
+				tl2->changeState();
+				++tlStateTeller;
+			}
+			break;
+		case 2:
+			{
+				tl2->changeState();
+				++tlStateTeller;
+			}
+			break;
+		case 3:
+			{
+				tlStateTeller = 0;
+				KillTimer(hWnd, 1);
+				// timer for å bytte hvilken retning som er rød / grønn
+				SetTimer(hWnd, 0, 10000, NULL);
+			}
+			break;
+		default: break;
 		}
-		break;
-	default: break;
 	}
+	isHz = !isHz;
 	InvalidateRect(hWnd, NULL, false);
 }
 

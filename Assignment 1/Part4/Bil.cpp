@@ -1,97 +1,63 @@
-#include "framework.h"
+#include "Windows.h"
+#include "Bil.h"
 
-enum class BilColour
+
+Bil::Bil(const BilColour colour, const BilDirection dir, const int size) :
+	colour(colour),
+	size(size),
+	dir(dir),
+	pos(0),
+	invalid(false)
 {
-	RED,
-	GREEN,
-	BLUE,
-	YELLOW,
-	BLACK,
-	WHITE
-};
+}
 
-enum class BilDirection
+void Bil::updatePos(const int movement)
 {
-	HORIZONTAL,
-	VERTICAL
-};
+	pos += movement;
+}
 
-class Bil
+void Bil::draw(const HDC& hdc, const int line) const
 {
-	BilColour colour;
-
-	HBRUSH redBrush = CreateSolidBrush(RGB(255, 0, 0));
-	HBRUSH yellowBrush = CreateSolidBrush(RGB(255, 255, 0));
-	HBRUSH greenBrush = CreateSolidBrush(RGB(0, 255, 0));
-	HBRUSH blueBrush = CreateSolidBrush(RGB(0, 0, 255));
-	HBRUSH blackBrush = CreateSolidBrush(RGB(0, 0, 0));
-	HBRUSH whiteBrush = CreateSolidBrush(RGB(255, 255, 255));
-
-public:
-	// size is 1x width, 2x height
-	int size;
-	// position is the relevant position on the road line, dependant on Direction
-	BilDirection dir;
-	int pos;
-	bool invalid;
-
-	Bil(const BilColour colour, const BilDirection dir, const int size) :
-		colour(colour),
-		size(size),
-		dir(dir),
-		pos(0),
-		invalid(false)
+	const HGDIOBJ hOrg = SelectObject(hdc, whiteBrush);
+	switch (colour)
 	{
+	case BilColour::RED:
+		SelectObject(hdc, redBrush);
+		break;
+	case BilColour::YELLOW:
+		SelectObject(hdc, yellowBrush);
+		break;
+	case BilColour::GREEN:
+		SelectObject(hdc, greenBrush);
+		break;
+	case BilColour::BLUE:
+		SelectObject(hdc, blueBrush);
+		break;
+	case BilColour::BLACK:
+		SelectObject(hdc, blackBrush);
+		break;
+	case BilColour::WHITE:
+		SelectObject(hdc, whiteBrush);
+		break;
 	}
 
-	void updatePos(const int movement)
+	switch (dir)
 	{
-		pos += movement;
+	case BilDirection::HORIZONTAL:
+		Rectangle(hdc, pos - size, line - (size / 2), pos + size, line + (size / 2));
+		break;
+	case BilDirection::VERTICAL:
+		Rectangle(hdc, line - (size / 2), pos - size, line + (size / 2), pos + size);
+		break;
 	}
+	SelectObject(hdc, hOrg);
+}
 
-	void draw(const HDC& hdc, const int line) const
+bool Bil::collidesWith(const int otherPos, const int movesize) const
+{
+	if (otherPos < 0)
 	{
-		const HGDIOBJ hOrg = SelectObject(hdc, whiteBrush);
-		switch (colour)
-		{
-		case BilColour::RED:
-			SelectObject(hdc, redBrush);
-			break;
-		case BilColour::YELLOW:
-			SelectObject(hdc, yellowBrush);
-			break;
-		case BilColour::GREEN:
-			SelectObject(hdc, greenBrush);
-			break;
-		case BilColour::BLUE:
-			SelectObject(hdc, blueBrush);
-			break;
-		case BilColour::BLACK:
-			SelectObject(hdc, blackBrush);
-			break;
-		case BilColour::WHITE:
-			SelectObject(hdc, whiteBrush);
-			break;
-		}
-
-		switch (dir)
-		{
-		case BilDirection::HORIZONTAL:
-			Rectangle(hdc, pos - size, line - (size / 2), pos + size, line + (size / 2));
-			break;
-		case BilDirection::VERTICAL:
-			Rectangle(hdc, line - (size / 2), pos - size, line + (size / 2), pos + size);
-			break;
-		}
-		SelectObject(hdc, hOrg);
+		return false;
 	}
-
-	bool collidesWith(const int otherPos, const int movesize) const
-	{
-		if (otherPos < 0)
-		{
-			return false;
-		}
-		return pos + size + (2 * movesize) >= otherPos;
-	}
-};
+	return pos + size + (2 * movesize) >= otherPos;
+}
