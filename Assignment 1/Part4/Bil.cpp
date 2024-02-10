@@ -20,9 +20,6 @@ class Bil
 {
 	BilColour colour;
 
-	// size is 1x width, 2x height
-	int size;
-
 	HBRUSH redBrush = CreateSolidBrush(RGB(255, 0, 0));
 	HBRUSH yellowBrush = CreateSolidBrush(RGB(255, 255, 0));
 	HBRUSH greenBrush = CreateSolidBrush(RGB(0, 255, 0));
@@ -31,11 +28,19 @@ class Bil
 	HBRUSH whiteBrush = CreateSolidBrush(RGB(255, 255, 255));
 
 public:
+	// size is 1x width, 2x height
+	int size;
 	// position is the relevant position on the road line, dependant on Direction
 	BilDirection dir;
 	int pos;
-	
-	Bil(const BilColour colour, const BilDirection dir, const int size) : colour(colour), dir(dir), pos(0), size(size)
+	bool invalid;
+
+	Bil(const BilColour colour, const BilDirection dir, const int size) :
+		colour(colour),
+		size(size),
+		dir(dir),
+		pos(0),
+		invalid(false)
 	{
 	}
 
@@ -72,12 +77,21 @@ public:
 		switch (dir)
 		{
 		case BilDirection::HORIZONTAL:
-			Rectangle(hdc, pos - size, line - (size/2), pos + size, line + (size/2));
+			Rectangle(hdc, pos - size, line - (size / 2), pos + size, line + (size / 2));
 			break;
 		case BilDirection::VERTICAL:
-			Rectangle(hdc, line - (size/2), pos - size, line + (size/2), pos + size);
+			Rectangle(hdc, line - (size / 2), pos - size, line + (size / 2), pos + size);
 			break;
 		}
 		SelectObject(hdc, hOrg);
+	}
+
+	bool collidesWith(const int otherPos, const int movesize) const
+	{
+		if (otherPos < 0)
+		{
+			return false;
+		}
+		return pos + size + (2 * movesize) >= otherPos;
 	}
 };

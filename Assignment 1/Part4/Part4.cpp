@@ -8,8 +8,8 @@
 #include <forward_list>
 #include <vector>
 
-#include "TrafficLight.cpp"
-#include "Bil.cpp"
+#include "TrafficLight.h"
+#include "Bil.h"
 
 #define MAX_LOADSTRING 100
 
@@ -22,7 +22,6 @@ WCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
 ATOM MyRegisterClass(HINSTANCE hInstance);
 BOOL InitInstance(HINSTANCE, int);
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
-INT_PTR CALLBACK About(HWND, UINT, WPARAM, LPARAM);
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                       _In_opt_ HINSTANCE hPrevInstance,
@@ -129,18 +128,21 @@ HBRUSH roadBrush;
 
 HPEN noPen;
 
+// variable for counting the state for the traffic lights
 int tlStateTeller = 0;
-
-long windowW = 0;
-long windowH = 0;
 
 typedef std::deque<Bil*> biler;
 
-biler hzBiler;
-biler vertBiler;
-biler afterTL;
-BilColour stupid = BilColour::RED;
+biler hzBilerBTL;
+biler vertBilerBTL;
+biler hzBilerATL;
+biler vertBilerATL;
 
+// the below method needs a starting colour
+BilColour stupid = BilColour::RED;
+//
+// Method for getting a new colour for each car
+//
 BilColour nextColour()
 {
 	switch (stupid)
@@ -168,6 +170,213 @@ BilColour nextColour()
 }
 
 //
+// Moves cars before the traffic lights
+//
+void moveCars(HWND hWnd)
+{
+	/*
+	TODO: Update logic for moving cars
+	maybe use the deques to store "new" cars to appear
+	the road should likely be an indexed array or vector,
+	atleast the part leading up to the intersection
+	this way its easy to prevent a collision by checking if the next pos has a car or not
+	then each car can keep moving every timer iteration,
+	until there is a car in front or red light
+	the red light should be checked at a certain position
+	then it can also have collision detection in the intersection,
+	if the center position get pushed to both road arrays
+	a new car should be added to the road if there is room,
+	else added to deque (maybe limit this?)
+	*/
+
+	int prevBilPos = -1;
+	const int movesize = 10;
+	// flytter horisontale biler
+	for (const auto bil : hzBilerBTL)
+	{
+		if (bil->pos > tl2->stopPos)
+		{
+			hzBilerBTL.pop_front();
+			hzBilerATL.push_back(bil);
+			// dont need to check for collision if the car is past the traffic light
+			bil->updatePos(movesize);
+		}
+		else
+		{
+			if (!bil->collidesWith(prevBilPos, movesize))
+			{
+				if (tl2->canDrive() || !bil->collidesWith(tl2->stopPos, movesize))
+				{
+					// move car 10 px
+					bil->updatePos(movesize);
+				}
+			}
+			prevBilPos = bil->pos - bil->size / 2;
+		}
+	}
+	prevBilPos = -1;
+	// flytter vertikale biler
+	for (const auto bil : vertBilerBTL)
+	{
+		if (bil->pos > tl1->stopPos)
+		{
+			vertBilerBTL.pop_front();
+			vertBilerATL.push_back(bil);
+			bil->updatePos(movesize);
+		}
+		else
+		{
+			if (!bil->collidesWith(prevBilPos, movesize))
+			{
+				if (tl1->canDrive() || !bil->collidesWith(tl1->stopPos, movesize))
+				{
+					// move car 10 px
+					bil->updatePos(movesize);
+				}
+			}
+			prevBilPos = bil->pos - bil->size / 2;
+		}
+		InvalidateRect(hWnd, NULL, false);
+	}
+}
+
+//
+// Moves the cars which has passed the traffic light
+//
+void moveCarsAfterTL(HWND hWnd)
+{
+	for (const auto bil : hzBilerATL)
+	{
+		bil->updatePos(10);
+
+		if (bil->invalid)
+		{
+			hzBilerATL.pop_front();
+			delete(bil);
+		}
+	}
+	for (const auto bil : vertBilerATL)
+	{
+		bil->updatePos(10);
+
+		if (bil->invalid)
+		{
+			vertBilerATL.pop_front();
+			delete(bil);
+		}
+	}
+	InvalidateRect(hWnd, NULL, false);
+}
+
+void changeTLStates(HWND hWnd)
+{
+	switch (tlStateTeller)
+	{
+	case 0:
+	case 1:
+		{
+			// endre state for trafikklys
+			tl1->changeState();
+			tl2->changeState();
+			++tlStateTeller;
+		}
+		break;
+	case 2:
+		{
+			tlStateTeller = 0;
+			KillTimer(hWnd, 1);
+			// timer for å bytte hvilken retning som er rød / grønn
+			SetTimer(hWnd, 0, 10000, NULL);
+		}
+		break;
+	default: break;
+	}
+	InvalidateRect(hWnd, NULL, false);
+}
+
+//
+// My programs paint
+// extracted from WM_PAINT for better readability
+//
+void myPaint(HWND hWnd, HDC hdc)
+{
+	RECT screen;
+	GetClientRect(hWnd, &screen);
+
+	// Making our virtual device context and bitmap
+	HDC vdc = CreateCompatibleDC(hdc);
+	HBITMAP bmp = CreateCompatibleBitmap(hdc, screen.right, screen.bottom);
+	SelectObject(vdc, bmp);
+
+	// Select the white brush
+	HGDIOBJ orgBrush = SelectObject(vdc, whiteBrush);
+
+	// Notice all drawing operations go to our virtual device context
+	Rectangle(vdc, 0, 0, screen.right, screen.bottom);
+
+	// Draw roads
+	// Select wanted pen and brush, and store original pen & brush
+	SelectObject(vdc, roadBrush);
+	HGDIOBJ orgPen = SelectObject(vdc, noPen);
+
+	// Draw horizontal road, should be centered in the window
+	Rectangle(vdc, 0, (screen.bottom / 2) - 50, screen.right, (screen.bottom / 2) + 50);
+	// Draw vertical road, should be centered in the window
+	Rectangle(vdc, (screen.right / 2) - 50, 0, (screen.right / 2) + 50, screen.bottom);
+
+	// Restore original pen
+	SelectObject(vdc, orgPen);
+
+	// Code for dynamically updating the position of traffic lights for the window size
+	// traffic light has height and widths of 190 and 70 pixels, and is drawn from top-left position
+	// road is 100 pixels wide, centered on screen so +-50 pixels
+	// i want 10 pixels of buffer from road to traffic light
+	// also sets the stop position for the cars
+	tl1->setPos(screen.right / 2 - 70 - 50 - 10, screen.bottom / 2 - 190 - 50 - 10);
+	tl1->stopPos = (screen.bottom / 2) - 50;
+	tl2->setPos(screen.right / 2 - 190 - 50 - 10, screen.bottom / 2 + 50 + 10);
+	tl2->stopPos = (screen.right / 2) - 50;
+
+	// Draw traffic lights
+	tl1->draw(vdc);
+	tl2->draw(vdc);
+
+	for (const auto bil : hzBilerBTL)
+	{
+		bil->draw(vdc, screen.bottom / 2);
+	}
+	for (const auto bil : vertBilerBTL)
+	{
+		bil->draw(vdc, screen.right / 2);
+	}
+	for (const auto bil : hzBilerATL)
+	{
+		bil->draw(vdc, screen.bottom / 2);
+		bil->invalid = bil->pos > screen.right;
+	}
+	for (const auto bil : vertBilerATL)
+	{
+		bil->draw(vdc, screen.right / 2);
+		bil->invalid = bil->pos > screen.bottom;
+	}
+
+	// Restore original brush
+	SelectObject(vdc, orgBrush);
+
+	// One single copy operation copies everything from the virtual context to the
+	// physical one
+	BitBlt(hdc, 0, 0, screen.right, screen.bottom, vdc, 0, 0, SRCCOPY);
+
+	// Cleaning up our virtual context. For better program performance,
+	// We might consider just keeping these around instead of creating new ones and
+	// deleting at every WM_PAINT call, but if so, be sure that you reuse the existing
+	// ones and not just keep making new ones
+	DeleteObject(bmp);
+	DeleteDC(vdc);
+}
+
+
+//
 //  FUNCTION: WndProc(HWND, UINT, WPARAM, LPARAM)
 //
 //  PURPOSE: Processes messages for the main window.
@@ -183,8 +392,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 	case WM_CREATE:
 		{
-			tl1 = new TrafficLight(TLState::GO, TLDir::VERTICAL);
-			tl2 = new TrafficLight(TLState::STOP, TLDir::HORIZONTALFLIPPED);
+			tl1 = new TrafficLight(TLState::GO, TLDir::VERTICAL, 0);
+			tl2 = new TrafficLight(TLState::STOP, TLDir::HORIZONTALFLIPPED, 0);
 			roadBrush = CreateSolidBrush(RGB(100, 100, 100));
 			whiteBrush = CreateSolidBrush(RGB(255, 255, 255));
 			noPen = CreatePen(PS_NULL, 0, RGB(0, 0, 0));
@@ -205,9 +414,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			// Parse the menu selections:
 			switch (wmId)
 			{
-			case IDM_ABOUT:
-				DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
-				break;
 			case IDM_EXIT:
 				DestroyWindow(hWnd);
 				break;
@@ -218,13 +424,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 	case WM_RBUTTONDOWN:
 		{
-			vertBiler.push_back(new Bil(nextColour(), BilDirection::VERTICAL, 15));
+			vertBilerBTL.push_back(new Bil(nextColour(), BilDirection::VERTICAL, 15));
 			InvalidateRect(hWnd, NULL, TRUE);
 		}
 		break;
 	case WM_LBUTTONDOWN:
 		{
-			hzBiler.push_back(new Bil(nextColour(), BilDirection::HORIZONTAL, 15));
+			hzBilerBTL.push_back(new Bil(nextColour(), BilDirection::HORIZONTAL, 15));
 			InvalidateRect(hWnd, NULL, TRUE);
 		}
 		break;
@@ -243,202 +449,34 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				break;
 			case 1:
 				{
-					switch (tlStateTeller)
-					{
-					case 0:
-					case 1:
-						{
-							// endre state for trafikklys
-							tl1->changeState();
-							tl2->changeState();
-							++tlStateTeller;
-						}
-						break;
-					case 2:
-						{
-							tlStateTeller = 0;
-							KillTimer(hWnd, 1);
-							// timer for å bytte hvilken retning som er rød / grønn
-							SetTimer(hWnd, 0, 10000, NULL);
-						}
-						break;
-					default: break;
-					}
-					InvalidateRect(hWnd, NULL, false);
+					changeTLStates(hWnd);
 				}
 				break;
 			case 2:
 				{
-					/*
-					TODO: Update logic for moving cars
-					maybe use the deques to store "new" cars to appear
-					the road should likely be an indexed array or vector, atleast the part leading up to the intersection
-					this way its easy to prevent a collision by checking if the next pos has a car or not
-					then each car can keep moving every timer iteration, until there is a car in front or red light
-					the red light should be checked at a certain position
-					then it can also have collision detection in the intersection,
-					if the center position get pushed to both road arrays
-					a new car should be added to the road if there is room, else added to deque (maybe limit this?)
-					*/
-					if (tl1->canDrive())
-					{
-						// flytter horisontale biler
-						for (const auto bil : hzBiler)
-						{
-							if (bil->pos > windowW)
-							{
-								// litt dumt kanskje, men en bil som e utenfor skal alltid være den første i køen logisk sett
-								hzBiler.pop_front();
-								delete(bil);
-							}
-							else if (bil->pos > windowW / 2)
-							{
-								hzBiler.pop_front();
-								afterTL.push_back(bil);
-								bil->updatePos(10);
-							}
-							else
-							{
-								// move car 10 px
-								bil->updatePos(10);
-							}
-						}
-					}
-					if(tl2->canDrive())
-					{
-						// flytter vertikale biler
-						for (const auto bil : vertBiler)
-						{
-							if (bil->pos > windowH)
-							{
-								// litt dumt kanskje, men en bil so me utenfor skal alltid være den første i køen logisk sett
-								vertBiler.pop_front();
-								delete(bil);
-							}
-							else if (bil->pos > windowH / 2)
-							{
-								vertBiler.pop_front();
-								afterTL.push_back(bil);
-								bil->updatePos(10);
-							}
-							else
-							{
-								// move car 10 px
-								bil->updatePos(10);
-							}
-						}
-					}
-					InvalidateRect(hWnd, NULL, false);
+					moveCars(hWnd);
 				}
 				break;
 			case 3:
 				{
-					for (const auto bil : afterTL)
-					{
-						bil->updatePos(10);
-						if (bil->dir == BilDirection::HORIZONTAL)
-						{
-							if (bil->pos > windowW)
-							{
-								// litt dumt kanskje, men en bil som e utenfor skal alltid være den første i køen logisk sett
-								afterTL.pop_front();
-								delete(bil);
-							}
-						}
-						else
-						{
-							if (bil->pos > windowH)
-							{
-								// litt dumt kanskje, men en bil som e utenfor skal alltid være den første i køen logisk sett
-								afterTL.pop_front();
-								delete(bil);
-							}
-						}
-					}
-					InvalidateRect(hWnd, NULL, false);
+					moveCarsAfterTL(hWnd);
 				}
 				break;
 			default: break;
 			}
 		}
 		break;
+	// Override default background erase
+	// I dont need it to happen, as i use double buffering and redraw everything like that
+	// leaving this default creates flickering sometimes, when something external forces repaint
+	case WM_ERASEBKGND:
+		break;
 	case WM_PAINT:
 		{
 			PAINTSTRUCT ps;
 			HDC hdc = BeginPaint(hWnd, &ps);
-			RECT screen;
-			GetClientRect(hWnd, &screen);
 
-			windowH = screen.bottom;
-			windowW = screen.right;
-
-			// Making our virtual device context and bitmap
-			HDC vdc = CreateCompatibleDC(hdc);
-			HBITMAP bmp = CreateCompatibleBitmap(hdc, screen.right, screen.bottom);
-			SelectObject(vdc, bmp);
-
-			// Select the white brush
-			HGDIOBJ orgBrush = SelectObject(vdc, whiteBrush);
-
-			// Notice all drawing operations go to our virtual device context
-			Rectangle(vdc, 0, 0, screen.right, screen.bottom);
-
-			// Draw roads
-			// Select wanted pen and brush, and store original pen & brush
-			SelectObject(vdc, roadBrush);
-			HGDIOBJ orgPen = SelectObject(vdc, noPen);
-
-			// Draw horizontal road, should be centered in the window
-			Rectangle(vdc, 0, (screen.bottom / 2) - 50, screen.right, (screen.bottom / 2) + 50);
-			// Draw vertical road, should be centered in the window
-			Rectangle(vdc, (screen.right / 2) - 50, 0, (screen.right / 2) + 50, screen.bottom);
-
-			// Restore original pen
-			SelectObject(vdc, orgPen);
-
-			// Code for dynamically updating the position of traffic lights for the window size
-			// traffic light has height and widths of 190 and 70 pixels, and is drawn from top-left position
-			// road is 100 pixels wide, centered on screen so +-50 pixels
-			// i want 10 pixels of buffer from road to traffic light
-			tl1->setPos(screen.right / 2 - 70 - 50 - 10, screen.bottom / 2 - 190 - 50 - 10);
-			tl2->setPos(screen.right / 2 - 190 - 50 - 10, screen.bottom / 2 + 50 + 10);
-
-			// Draw traffic lights
-			tl1->draw(vdc);
-			tl2->draw(vdc);
-
-			for (auto bil : hzBiler)
-			{
-				bil->draw(vdc, screen.bottom / 2);
-			}
-			for (auto bil : vertBiler)
-			{
-				bil->draw(vdc, screen.right / 2);
-			}
-			for (auto bil : afterTL)
-			{
-				if (bil->dir == BilDirection::VERTICAL)
-				{
-					bil->draw(vdc, screen.right / 2);
-				} else
-				{
-					bil->draw(vdc, screen.bottom / 2);
-				}
-			}
-
-			// Restore original brush
-			SelectObject(vdc, orgBrush);
-
-			// One single copy operation copies everything from the virtual context to the
-			// physical one
-			BitBlt(hdc, 0, 0, screen.right, screen.bottom, vdc, 0, 0, SRCCOPY);
-
-			// Cleaning up our virtual context. For better program performance,
-			// We might consider just keeping these around instead of creating new ones and
-			// deleting at every WM_PAINT call, but if so, be sure that you reuse the existing
-			// ones and not just keep making new ones
-			DeleteObject(bmp);
-			DeleteDC(vdc);
+			myPaint(hWnd, hdc);
 
 			EndPaint(hWnd, &ps);
 		}
@@ -455,24 +493,4 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		return DefWindowProc(hWnd, message, wParam, lParam);
 	}
 	return 0;
-}
-
-// Message handler for about box.
-INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
-{
-	UNREFERENCED_PARAMETER(lParam);
-	switch (message)
-	{
-	case WM_INITDIALOG:
-		return (INT_PTR)TRUE;
-
-	case WM_COMMAND:
-		if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
-		{
-			EndDialog(hDlg, LOWORD(wParam));
-			return (INT_PTR)TRUE;
-		}
-		break;
-	}
-	return (INT_PTR)FALSE;
 }

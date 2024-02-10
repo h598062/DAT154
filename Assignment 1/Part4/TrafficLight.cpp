@@ -146,12 +146,14 @@ class TrafficLight
 	}
 
 public:
+	int stopPos;
 	// Create a traffic light, state is initial state
-	TrafficLight(const TLState state, const TLDir dir) :
+	TrafficLight(const TLState state, const TLDir dir, const int stopPos) :
 		state(state),
 		posX(0),
 		posY(0),
-		dir(dir)
+		dir(dir),
+		stopPos(stopPos)
 	{
 		this->red = new TLCircle(circleSize);
 		this->yellow = new TLCircle(circleSize);
