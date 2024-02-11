@@ -18,7 +18,7 @@ void TLCircle::setPos(const int x, const int y)
 
 // TrafficLight
 void TrafficLight::drawLights(const HDC& hdc, const bool redState, const bool yellowState,
-	const bool greenState) const
+                              const bool greenState) const
 {
 	// Draw Red light
 	if (redState)
@@ -64,31 +64,31 @@ void TrafficLight::drawTLBox(const HDC& hdc) const
 		// Background rectangle
 		SelectObject(hdc, bgBrush);
 		Rectangle(hdc,
-				  posX,
-				  posY,
-				  posX + circleSize + (2 * spacing),
-				  posY + (3 * circleSize) + (4 * spacing));
+		          posX,
+		          posY,
+		          posX + circleSize + (2 * spacing),
+		          posY + (3 * circleSize) + (4 * spacing));
 		break;
 	case TLDir::HORIZONTAL:
 	case TLDir::HORIZONTALFLIPPED:
 		// Background rectangle
 		SelectObject(hdc, bgBrush);
 		Rectangle(hdc,
-				  posX,
-				  posY,
-				  posX + (3 * circleSize) + (4 * spacing),
-				  posY + circleSize + (2 * spacing));
+		          posX,
+		          posY,
+		          posX + (3 * circleSize) + (4 * spacing),
+		          posY + circleSize + (2 * spacing));
 		break;
 	}
 	SelectObject(hdc, orgPen);
 }
 
 TrafficLight::TrafficLight(const TLState state, const TLDir dir, const int stopPos) :
-		state(state),
-		posX(0),
-		posY(0),
-		dir(dir),
-		stopPos(stopPos)
+	state(state),
+	dir(dir),
+	posX(0),
+	posY(0),
+	stopPos(stopPos)
 {
 	this->red = new TLCircle(circleSize);
 	this->yellow = new TLCircle(circleSize);

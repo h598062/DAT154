@@ -6,7 +6,9 @@
 
 #include <deque>
 #include <forward_list>
+#include <string>
 #include <vector>
+#include <ctime>
 
 #include "ColourBrushes.h"
 #include "TrafficLight.h"
@@ -20,49 +22,48 @@ WCHAR szTitle[MAX_LOADSTRING];                  // The title bar text
 WCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
 
 // Forward declarations of functions included in this code module:
-ATOM                MyRegisterClass(HINSTANCE hInstance);
-BOOL                InitInstance(HINSTANCE, int);
-LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
-INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
+ATOM MyRegisterClass(HINSTANCE hInstance);
+BOOL InitInstance(HINSTANCE, int);
+LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
+INT_PTR CALLBACK Intensity(HWND, UINT, WPARAM, LPARAM);
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
-                     _In_opt_ HINSTANCE hPrevInstance,
-                     _In_ LPWSTR    lpCmdLine,
-                     _In_ int       nCmdShow)
+                      _In_opt_ HINSTANCE hPrevInstance,
+                      _In_ LPWSTR lpCmdLine,
+                      _In_ int nCmdShow)
 {
-    UNREFERENCED_PARAMETER(hPrevInstance);
-    UNREFERENCED_PARAMETER(lpCmdLine);
+	UNREFERENCED_PARAMETER(hPrevInstance);
+	UNREFERENCED_PARAMETER(lpCmdLine);
 
-    // TODO: Place code here.
+	// TODO: Place code here.
 
-    // Initialize global strings
-    LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
-    LoadStringW(hInstance, IDC_PART5, szWindowClass, MAX_LOADSTRING);
-    MyRegisterClass(hInstance);
+	// Initialize global strings
+	LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
+	LoadStringW(hInstance, IDC_PART5, szWindowClass, MAX_LOADSTRING);
+	MyRegisterClass(hInstance);
 
-    // Perform application initialization:
-    if (!InitInstance (hInstance, nCmdShow))
-    {
-        return FALSE;
-    }
+	// Perform application initialization:
+	if (!InitInstance(hInstance, nCmdShow))
+	{
+		return FALSE;
+	}
 
-    HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_PART5));
+	HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_PART5));
 
-    MSG msg;
+	MSG msg;
 
-    // Main message loop:
-    while (GetMessage(&msg, nullptr, 0, 0))
-    {
-        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
-        {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
-        }
-    }
+	// Main message loop:
+	while (GetMessage(&msg, nullptr, 0, 0))
+	{
+		if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+		{
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+	}
 
-    return (int) msg.wParam;
+	return (int)msg.wParam;
 }
-
 
 
 //
@@ -72,23 +73,23 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 //
 ATOM MyRegisterClass(HINSTANCE hInstance)
 {
-    WNDCLASSEXW wcex;
+	WNDCLASSEXW wcex;
 
-    wcex.cbSize = sizeof(WNDCLASSEX);
+	wcex.cbSize = sizeof(WNDCLASSEX);
 
-    wcex.style          = CS_HREDRAW | CS_VREDRAW;
-    wcex.lpfnWndProc    = WndProc;
-    wcex.cbClsExtra     = 0;
-    wcex.cbWndExtra     = 0;
-    wcex.hInstance      = hInstance;
-    wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_PART5));
-    wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
-    wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_PART5);
-    wcex.lpszClassName  = szWindowClass;
-    wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
+	wcex.style = CS_HREDRAW | CS_VREDRAW;
+	wcex.lpfnWndProc = WndProc;
+	wcex.cbClsExtra = 0;
+	wcex.cbWndExtra = 0;
+	wcex.hInstance = hInstance;
+	wcex.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_PART5));
+	wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
+	wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+	wcex.lpszMenuName = MAKEINTRESOURCEW(IDC_PART5);
+	wcex.lpszClassName = szWindowClass;
+	wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
-    return RegisterClassExW(&wcex);
+	return RegisterClassExW(&wcex);
 }
 
 //
@@ -103,20 +104,20 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 //
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
-   hInst = hInstance; // Store instance handle in our global variable
+	hInst = hInstance; // Store instance handle in our global variable
 
-   HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+	HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
+	                          CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 
-   if (!hWnd)
-   {
-      return FALSE;
-   }
+	if (!hWnd)
+	{
+		return FALSE;
+	}
 
-   ShowWindow(hWnd, nCmdShow);
-   UpdateWindow(hWnd);
+	ShowWindow(hWnd, nCmdShow);
+	UpdateWindow(hWnd);
 
-   return TRUE;
+	return TRUE;
 }
 
 // My Global variables
@@ -136,6 +137,9 @@ biler hzBilerBTL;
 biler vertBilerBTL;
 biler hzBilerATL;
 biler vertBilerATL;
+
+int intensity_pn = 20;
+int intensity_pw = 20;
 
 // the below method needs a starting colour
 BilColour stupid = BilColour::RED;
@@ -303,7 +307,8 @@ void changeTLStates(HWND hWnd)
 			break;
 		default: break;
 		}
-	} else
+	}
+	else
 	{
 		switch (tlStateTeller)
 		{
@@ -388,6 +393,12 @@ void myPaint(HWND hWnd, HDC hdc)
 	tl1->draw(vdc);
 	tl2->draw(vdc);
 
+	// add intensity text next to tl boxes
+	const std::wstring pn_str = std::to_wstring(intensity_pn);
+	const std::wstring pw_str = std::to_wstring(intensity_pw);
+	TextOut(vdc, tl1->posX, tl1->posY, pn_str.c_str(), pn_str.length());
+	TextOut(vdc, tl2->posX, tl2->posY, pw_str.c_str(), pw_str.length());
+
 	for (const auto bil : hzBilerBTL)
 	{
 		bil->draw(vdc, screen.bottom / 2);
@@ -439,17 +450,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 	case WM_CREATE:
 		{
+			srand(static_cast<unsigned int>(time(nullptr)));
 			tl1 = new TrafficLight(TLState::GO, TLDir::VERTICAL, 0);
 			tl2 = new TrafficLight(TLState::STOP, TLDir::HORIZONTALFLIPPED, 0);
 
-			// timer for å bytte hvilken retning som er rød / grønn
+			// timer for choosing which direction can drive
 			SetTimer(hWnd, 0, 10000, NULL);
 
-			// timer for å flytte biler før lyskryss
+			// timer for moving cars
 			SetTimer(hWnd, 2, 100, NULL);
 
-			// timer for å flytte biler etter lyskryss
-			SetTimer(hWnd, 3, 100, NULL);
+			// timer for adding cars per pw or pn intensity
+			SetTimer(hWnd, 3, 1000, NULL);
+
+			
 		}
 		break;
 	case WM_COMMAND:
@@ -461,23 +475,26 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			case IDM_EXIT:
 				DestroyWindow(hWnd);
 				break;
+			case ID_INTENSITY:
+				DialogBox(hInst, MAKEINTRESOURCE(IDD_INTENSITY_SELECT), hWnd, Intensity);
+				break;
 			default:
 				return DefWindowProc(hWnd, message, wParam, lParam);
 			}
 		}
 		break;
-	case WM_RBUTTONDOWN:
+	/*case WM_RBUTTONDOWN:
 		{
 			vertBilerBTL.push_back(new Bil(nextColour(), BilDirection::VERTICAL, 15));
-			InvalidateRect(hWnd, NULL, TRUE);
+			InvalidateRect(hWnd, NULL, false);
 		}
 		break;
 	case WM_LBUTTONDOWN:
 		{
 			hzBilerBTL.push_back(new Bil(nextColour(), BilDirection::HORIZONTAL, 15));
-			InvalidateRect(hWnd, NULL, TRUE);
+			InvalidateRect(hWnd, NULL, false);
 		}
-		break;
+		break;*/
 	case WM_TIMER:
 		{
 			switch (wParam)
@@ -498,12 +515,24 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				break;
 			case 2:
 				{
+					moveCarsAfterTL(hWnd);
 					moveCars(hWnd);
 				}
 				break;
 			case 3:
 				{
-					moveCarsAfterTL(hWnd);
+					int rndInt = rand() % 101;
+					if (intensity_pw > rndInt)
+					{
+						hzBilerBTL.push_back(new Bil(nextColour(), BilDirection::HORIZONTAL, 15));
+						InvalidateRect(hWnd, NULL, false);
+					}
+					if (intensity_pn > rndInt)
+					{
+						vertBilerBTL.push_back(new Bil(nextColour(), BilDirection::VERTICAL, 15));
+						InvalidateRect(hWnd, NULL, false);
+					}
+					InvalidateRect(hWnd, NULL, false);
 				}
 				break;
 			default: break;
@@ -537,4 +566,60 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		return DefWindowProc(hWnd, message, wParam, lParam);
 	}
 	return 0;
+}
+
+INT_PTR CALLBACK Intensity(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	UNREFERENCED_PARAMETER(lParam);
+	switch (message)
+	{
+	case WM_INITDIALOG:
+		{
+			HWND pwInputBox = GetDlgItem(hDlg, IDC_INT_INTESITY1);
+			HWND pnInputBox = GetDlgItem(hDlg, IDC_INT_INTESITY2);
+			// Convert intensity_pw and intensity_pn to strings before setting text
+			std::wstring pw_str = std::to_wstring(intensity_pw);
+			std::wstring pn_str = std::to_wstring(intensity_pn);
+			// Set the text of the edit controls
+			SetWindowText(pwInputBox, pw_str.c_str());
+			SetWindowText(pnInputBox, pn_str.c_str());
+			return (INT_PTR)TRUE;
+		}
+
+	case WM_COMMAND:
+		if (LOWORD(wParam) == IDOK)
+		{
+			// Deliberatly mixing the use of getting the item first then the contents (GetDlgItem + GetWindowText)
+			// With directly accessing the contents (GetDlgItemText) to show both methods.
+			BOOL isNum = false;
+			int newIntensity = GetDlgItemInt(hDlg, IDC_INT_INTESITY1, &isNum, false);
+			if (isNum && newIntensity >= 0 && newIntensity <= 100)
+			{
+				intensity_pw = newIntensity;
+				isNum = false;
+				newIntensity = GetDlgItemInt(hDlg, IDC_INT_INTESITY2, &isNum, false);
+				if (isNum && newIntensity >= 0 && newIntensity <= 100)
+				{
+					intensity_pn = newIntensity;
+				}
+				else
+				{
+					MessageBox(hDlg, L"Invalid Vertical intensity, it must be an integer between 0 and 100",
+					           L"Invalid Input", MB_OK);
+				}
+			}
+			else
+			{
+				MessageBox(hDlg, L"Invalid Horizontal intensity, it must be an integer between 0 and 100",
+				           L"Invalid Input", MB_OK);
+			}
+		}
+		if (LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return (INT_PTR)TRUE;
+		}
+		break;
+	}
+	return (INT_PTR)FALSE;
 }

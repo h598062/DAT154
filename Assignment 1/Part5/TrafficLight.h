@@ -49,8 +49,6 @@ public:
 class TrafficLight
 {
 	TLState state;
-	int posX;
-	int posY;
 	TLDir dir;
 	const int spacing = 10;
 	const int circleSize = 50;
@@ -65,6 +63,8 @@ class TrafficLight
 	void drawTLBox(const HDC& hdc) const;
 
 public:
+	int posX;
+	int posY;
 	int stopPos;
 	// Create a traffic light, state is initial state
 	TrafficLight(const TLState state, const TLDir dir, const int stopPos);

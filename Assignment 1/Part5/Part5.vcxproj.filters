@@ -27,13 +27,13 @@
     <ClInclude Include="Part5.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Part4\TrafficLight.h">
+    <ClInclude Include="Bil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Part4\Bil.h">
+    <ClInclude Include="ColourBrushes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Part4\ColourBrushes.h">
+    <ClInclude Include="TrafficLight.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -41,13 +41,13 @@
     <ClCompile Include="Part5.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Part4\Bil.cpp">
+    <ClCompile Include="Bil.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Part4\ColourBrushes.cpp">
+    <ClCompile Include="ColourBrushes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Part4\TrafficLight.cpp">
+    <ClCompile Include="TrafficLight.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
