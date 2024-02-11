@@ -11,6 +11,12 @@ extern HBRUSH greenBrush;
 extern HBRUSH blueBrush;
 extern HBRUSH blackBrush;
 extern HBRUSH whiteBrush;
+extern HBRUSH pinkBrush;
+extern HBRUSH orangeBrush;
+extern HBRUSH purpleBrush;
+extern HBRUSH brownBrush;
+extern HBRUSH cyanBrush;
+
 
 // TL specific
 extern HBRUSH bgBrush;

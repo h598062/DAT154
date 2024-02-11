@@ -9,7 +9,12 @@ enum class BilColour
 	BLUE,
 	YELLOW,
 	BLACK,
-	WHITE
+	WHITE,
+	PINK,
+	ORANGE,
+	PURPLE,
+	BROWN,
+	CYAN
 };
 
 enum class BilDirection

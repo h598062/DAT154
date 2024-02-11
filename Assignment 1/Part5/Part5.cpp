@@ -138,8 +138,10 @@ biler vertBilerBTL;
 biler hzBilerATL;
 biler vertBilerATL;
 
-int intensity_pn = 20;
-int intensity_pw = 20;
+const int movesize = 3;
+
+int intensity_pn = 50;
+int intensity_pw = 50;
 
 // the below method needs a starting colour
 BilColour stupid = BilColour::RED;
@@ -152,24 +154,39 @@ BilColour nextColour()
 	{
 	case BilColour::RED:
 		stupid = BilColour::GREEN;
-		return stupid;
+		break;
 	case BilColour::GREEN:
 		stupid = BilColour::BLUE;
-		return stupid;
+		break;
 	case BilColour::BLUE:
 		stupid = BilColour::YELLOW;
-		return stupid;
+		break;
 	case BilColour::YELLOW:
 		stupid = BilColour::BLACK;
-		return stupid;
+		break;
 	case BilColour::BLACK:
 		stupid = BilColour::WHITE;
-		return stupid;
+		break;
 	case BilColour::WHITE:
+		stupid = BilColour::PINK;
+		break;
+	case BilColour::PINK:
+		stupid = BilColour::ORANGE;
+		break;
+	case BilColour::ORANGE:
+		stupid = BilColour::PURPLE;
+		break;
+	case BilColour::PURPLE:
+		stupid = BilColour::BROWN;
+		break;
+	case BilColour::BROWN:
+		stupid = BilColour::CYAN;
+		break;
+	case BilColour::CYAN:
 		stupid = BilColour::RED;
-		return stupid;
+		break;
 	}
-	return BilColour::RED;
+	return stupid;
 }
 
 //
@@ -193,7 +210,6 @@ void moveCars(HWND hWnd)
 	*/
 
 	int prevBilPos = -1;
-	const int movesize = 10;
 	// flytter horisontale biler
 	for (const auto bil : hzBilerBTL)
 	{
@@ -210,7 +226,6 @@ void moveCars(HWND hWnd)
 			{
 				if (tl2->canDrive() || !bil->collidesWith(tl2->stopPos, movesize))
 				{
-					// move car 10 px
 					bil->updatePos(movesize);
 				}
 			}
@@ -233,7 +248,6 @@ void moveCars(HWND hWnd)
 			{
 				if (tl1->canDrive() || !bil->collidesWith(tl1->stopPos, movesize))
 				{
-					// move car 10 px
 					bil->updatePos(movesize);
 				}
 			}
@@ -250,7 +264,7 @@ void moveCarsAfterTL(HWND hWnd)
 {
 	for (const auto bil : hzBilerATL)
 	{
-		bil->updatePos(10);
+		bil->updatePos(movesize);
 
 		if (bil->invalid)
 		{
@@ -260,7 +274,7 @@ void moveCarsAfterTL(HWND hWnd)
 	}
 	for (const auto bil : vertBilerATL)
 	{
-		bil->updatePos(10);
+		bil->updatePos(movesize);
 
 		if (bil->invalid)
 		{
@@ -458,7 +472,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			SetTimer(hWnd, 0, 10000, NULL);
 
 			// timer for moving cars
-			SetTimer(hWnd, 2, 100, NULL);
+			SetTimer(hWnd, 2, 25, NULL);
 
 			// timer for adding cars per pw or pn intensity
 			SetTimer(hWnd, 3, 1000, NULL);

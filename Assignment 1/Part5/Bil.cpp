@@ -40,6 +40,21 @@ void Bil::draw(const HDC& hdc, const int line) const
 	case BilColour::WHITE:
 		SelectObject(hdc, whiteBrush);
 		break;
+	case BilColour::PINK:
+		SelectObject(hdc, pinkBrush);
+		break;
+	case BilColour::ORANGE:
+		SelectObject(hdc, orangeBrush);
+		break;
+	case BilColour::PURPLE:
+		SelectObject(hdc, purpleBrush);
+		break;
+	case BilColour::BROWN:
+		SelectObject(hdc, brownBrush);
+		break;
+	case BilColour::CYAN:
+		SelectObject(hdc, cyanBrush);
+		break;
 	}
 
 	switch (dir)
@@ -60,5 +75,5 @@ bool Bil::collidesWith(const int otherPos, const int movesize) const
 	{
 		return false;
 	}
-	return pos + size + (2 * movesize) >= otherPos;
+	return pos + (2*size) + (2 * movesize) >= otherPos;
 }
