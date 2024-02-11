@@ -296,6 +296,7 @@ void changeTLStates(HWND hWnd)
 				KillTimer(hWnd, 1);
 				// timer for å bytte hvilken retning som er rød / grønn
 				SetTimer(hWnd, 0, 10000, NULL);
+				isHz = !isHz;
 			}
 			break;
 		default: break;
@@ -329,12 +330,12 @@ void changeTLStates(HWND hWnd)
 				KillTimer(hWnd, 1);
 				// timer for å bytte hvilken retning som er rød / grønn
 				SetTimer(hWnd, 0, 10000, NULL);
+				isHz = !isHz;
 			}
 			break;
 		default: break;
 		}
 	}
-	isHz = !isHz;
 	InvalidateRect(hWnd, NULL, false);
 }
 
