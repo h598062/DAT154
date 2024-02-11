@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <ItemGroup Label="ProjectConfigurations">
+        <ProjectConfiguration Include="Debug|Win32">
+            <Configuration>Debug</Configuration>
+            <Platform>Win32</Platform>
+        </ProjectConfiguration>
+        <ProjectConfiguration Include="Release|Win32">
+            <Configuration>Release</Configuration>
+            <Platform>Win32</Platform>
+        </ProjectConfiguration>
+        <ProjectConfiguration Include="Debug|x64">
+            <Configuration>Debug</Configuration>
+            <Platform>x64</Platform>
+        </ProjectConfiguration>
+        <ProjectConfiguration Include="Release|x64">
+            <Configuration>Release</Configuration>
+            <Platform>x64</Platform>
+        </ProjectConfiguration>
+    </ItemGroup>
+    <PropertyGroup Label="Globals">
+        <VCProjectVersion>17.0</VCProjectVersion>
+        <Keyword>Win32Proj</Keyword>
+        <ProjectGuid>{a3a80df5-bfae-4cea-bd60-ede1f185f77c}</ProjectGuid>
+        <RootNamespace>Part5</RootNamespace>
+        <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    </PropertyGroup>
+    <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props"/>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+        <ConfigurationType>Application</ConfigurationType>
+        <UseDebugLibraries>true</UseDebugLibraries>
+        <PlatformToolset>v143</PlatformToolset>
+        <CharacterSet>Unicode</CharacterSet>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+        <ConfigurationType>Application</ConfigurationType>
+        <UseDebugLibraries>false</UseDebugLibraries>
+        <PlatformToolset>v143</PlatformToolset>
+        <WholeProgramOptimization>true</WholeProgramOptimization>
+        <CharacterSet>Unicode</CharacterSet>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+        <ConfigurationType>Application</ConfigurationType>
+        <UseDebugLibraries>true</UseDebugLibraries>
+        <PlatformToolset>v143</PlatformToolset>
+        <CharacterSet>Unicode</CharacterSet>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+        <ConfigurationType>Application</ConfigurationType>
+        <UseDebugLibraries>false</UseDebugLibraries>
+        <PlatformToolset>v143</PlatformToolset>
+        <WholeProgramOptimization>true</WholeProgramOptimization>
+        <CharacterSet>Unicode</CharacterSet>
+    </PropertyGroup>
+    <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props"/>
+    <ImportGroup Label="ExtensionSettings">
+    </ImportGroup>
+    <ImportGroup Label="Shared">
+    </ImportGroup>
+    <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+        <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform"/>
+    </ImportGroup>
+    <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+        <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform"/>
+    </ImportGroup>
+    <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+        <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform"/>
+    </ImportGroup>
+    <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+        <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform"/>
+    </ImportGroup>
+    <PropertyGroup Label="UserMacros"/>
+    <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+        <ClCompile>
+            <WarningLevel>Level3</WarningLevel>
+            <SDLCheck>true</SDLCheck>
+            <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+            <ConformanceMode>true</ConformanceMode>
+        </ClCompile>
+        <Link>
+            <SubSystem>Windows</SubSystem>
+            <GenerateDebugInformation>true</GenerateDebugInformation>
+        </Link>
+    </ItemDefinitionGroup>
+    <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+        <ClCompile>
+            <WarningLevel>Level3</WarningLevel>
+            <FunctionLevelLinking>true</FunctionLevelLinking>
+            <IntrinsicFunctions>true</IntrinsicFunctions>
+            <SDLCheck>true</SDLCheck>
+            <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+            <ConformanceMode>true</ConformanceMode>
+        </ClCompile>
+        <Link>
+            <SubSystem>Windows</SubSystem>
+            <EnableCOMDATFolding>true</EnableCOMDATFolding>
+            <OptimizeReferences>true</OptimizeReferences>
+            <GenerateDebugInformation>true</GenerateDebugInformation>
+        </Link>
+    </ItemDefinitionGroup>
+    <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+        <ClCompile>
+            <WarningLevel>Level3</WarningLevel>
+            <SDLCheck>true</SDLCheck>
+            <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+            <ConformanceMode>true</ConformanceMode>
+        </ClCompile>
+        <Link>
+            <SubSystem>Windows</SubSystem>
+            <GenerateDebugInformation>true</GenerateDebugInformation>
+        </Link>
+    </ItemDefinitionGroup>
+    <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+        <ClCompile>
+            <WarningLevel>Level3</WarningLevel>
+            <FunctionLevelLinking>true</FunctionLevelLinking>
+            <IntrinsicFunctions>true</IntrinsicFunctions>
+            <SDLCheck>true</SDLCheck>
+            <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+            <ConformanceMode>true</ConformanceMode>
+        </ClCompile>
+        <Link>
+            <SubSystem>Windows</SubSystem>
+            <EnableCOMDATFolding>true</EnableCOMDATFolding>
+            <OptimizeReferences>true</OptimizeReferences>
+            <GenerateDebugInformation>true</GenerateDebugInformation>
+        </Link>
+    </ItemDefinitionGroup>
+    <ItemGroup>
+        <ClInclude Include="framework.h"/>
+        <ClInclude Include="Part5.h"/>
+        <ClInclude Include="Resource.h"/>
+        <ClInclude Include="targetver.h"/>
+        <ClInclude Include="Bil.h"/>
+        <ClInclude Include="TrafficLight.h"/>
+        <ClInclude Include="ColourBrushes.h"/>
+    </ItemGroup>
+    <ItemGroup>
+
+    </ItemGroup>
+    <ItemGroup>
+        <ClCompile Include="Bil.cpp"/>
+        <ClCompile Include="ColourBrushes.cpp"/>
+        <ClCompile Include="TrafficLight.cpp"/>
+        <ClCompile Include="Part5.cpp">
+            <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebugDll</RuntimeLibrary>
+            <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebugDll</RuntimeLibrary>
+            <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MultiThreadedDebugDll</RuntimeLibrary>
+            <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MultiThreadedDebugDll</RuntimeLibrary>
+            <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">EnableFastChecks</BasicRuntimeChecks>
+            <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EnableFastChecks</BasicRuntimeChecks>
+            <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">EnableFastChecks</BasicRuntimeChecks>
+            <BasicRuntimeChecks Condition="'$(Configuration)|$(Platform)'=='Release|x64'">EnableFastChecks</BasicRuntimeChecks>
+            <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Disabled</Optimization>
+            <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
+            <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Disabled</Optimization>
+            <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Disabled</Optimization>
+            <SupportJustMyCode Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</SupportJustMyCode>
+            <SupportJustMyCode Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</SupportJustMyCode>
+            <SupportJustMyCode Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</SupportJustMyCode>
+            <SupportJustMyCode Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</SupportJustMyCode>
+            <AssemblerOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NoListing</AssemblerOutput>
+            <AssemblerOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NoListing</AssemblerOutput>
+            <AssemblerOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NoListing</AssemblerOutput>
+            <AssemblerOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NoListing</AssemblerOutput>
+            <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">x64\Debug\</AssemblerListingLocation>
+            <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">x64\Debug\</AssemblerListingLocation>
+            <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">x64\Debug\</AssemblerListingLocation>
+            <AssemblerListingLocation Condition="'$(Configuration)|$(Platform)'=='Release|x64'">x64\Debug\</AssemblerListingLocation>
+            <UndefineAllPreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</UndefineAllPreprocessorDefinitions>
+            <UndefineAllPreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</UndefineAllPreprocessorDefinitions>
+            <UndefineAllPreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</UndefineAllPreprocessorDefinitions>
+            <UndefineAllPreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</UndefineAllPreprocessorDefinitions>
+            <BrowseInformation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</BrowseInformation>
+            <BrowseInformation Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</BrowseInformation>
+            <BrowseInformation Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</BrowseInformation>
+            <BrowseInformation Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</BrowseInformation>
+            <BrowseInformationFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">x64\Debug\</BrowseInformationFile>
+            <BrowseInformationFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">x64\Debug\</BrowseInformationFile>
+            <BrowseInformationFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">x64\Debug\</BrowseInformationFile>
+            <BrowseInformationFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">x64\Debug\</BrowseInformationFile>
+            <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Default</CompileAs>
+            <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Default</CompileAs>
+            <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Default</CompileAs>
+            <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Default</CompileAs>
+            <ConformanceMode Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ConformanceMode>
+            <ConformanceMode Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ConformanceMode>
+            <ConformanceMode Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ConformanceMode>
+            <ConformanceMode Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ConformanceMode>
+            <DiagnosticsFormat Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Column</DiagnosticsFormat>
+            <DiagnosticsFormat Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Column</DiagnosticsFormat>
+            <DiagnosticsFormat Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Column</DiagnosticsFormat>
+            <DiagnosticsFormat Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Column</DiagnosticsFormat>
+            <DisableLanguageExtensions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</DisableLanguageExtensions>
+            <DisableLanguageExtensions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</DisableLanguageExtensions>
+            <DisableLanguageExtensions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</DisableLanguageExtensions>
+            <DisableLanguageExtensions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DisableLanguageExtensions>
+            <ErrorReporting Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Prompt</ErrorReporting>
+            <ErrorReporting Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Prompt</ErrorReporting>
+            <ErrorReporting Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Prompt</ErrorReporting>
+            <ErrorReporting Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Prompt</ErrorReporting>
+            <ExpandAttributedSource Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExpandAttributedSource>
+            <ExpandAttributedSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExpandAttributedSource>
+            <ExpandAttributedSource Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExpandAttributedSource>
+            <ExpandAttributedSource Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExpandAttributedSource>
+            <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Sync</ExceptionHandling>
+            <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Sync</ExceptionHandling>
+            <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Sync</ExceptionHandling>
+            <ExceptionHandling Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Sync</ExceptionHandling>
+            <EnableASAN Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</EnableASAN>
+            <EnableASAN Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</EnableASAN>
+            <EnableASAN Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</EnableASAN>
+            <EnableASAN Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</EnableASAN>
+            <EnableFuzzer Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</EnableFuzzer>
+            <EnableFuzzer Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</EnableFuzzer>
+            <EnableFuzzer Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</EnableFuzzer>
+            <EnableFuzzer Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</EnableFuzzer>
+            <EnableFiberSafeOptimizations Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</EnableFiberSafeOptimizations>
+            <EnableFiberSafeOptimizations Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</EnableFiberSafeOptimizations>
+            <EnableFiberSafeOptimizations Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</EnableFiberSafeOptimizations>
+            <EnableFiberSafeOptimizations Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</EnableFiberSafeOptimizations>
+            <EnableEnhancedInstructionSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotSet</EnableEnhancedInstructionSet>
+            <EnableEnhancedInstructionSet Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotSet</EnableEnhancedInstructionSet>
+            <EnableEnhancedInstructionSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotSet</EnableEnhancedInstructionSet>
+            <EnableEnhancedInstructionSet Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotSet</EnableEnhancedInstructionSet>
+            <FloatingPointModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Precise</FloatingPointModel>
+            <FloatingPointModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Precise</FloatingPointModel>
+            <FloatingPointModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Precise</FloatingPointModel>
+            <FloatingPointModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Precise</FloatingPointModel>
+            <ForceConformanceInForLoopScope Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ForceConformanceInForLoopScope>
+            <ForceConformanceInForLoopScope Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ForceConformanceInForLoopScope>
+            <ForceConformanceInForLoopScope Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ForceConformanceInForLoopScope>
+            <ForceConformanceInForLoopScope Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ForceConformanceInForLoopScope>
+            <GenerateModuleDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</GenerateModuleDependencies>
+            <GenerateModuleDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</GenerateModuleDependencies>
+            <GenerateModuleDependencies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</GenerateModuleDependencies>
+            <GenerateModuleDependencies Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</GenerateModuleDependencies>
+            <GenerateSourceDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</GenerateSourceDependencies>
+            <GenerateSourceDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</GenerateSourceDependencies>
+            <GenerateSourceDependencies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</GenerateSourceDependencies>
+            <GenerateSourceDependencies Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</GenerateSourceDependencies>
+            <GenerateXMLDocumentationFiles Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</GenerateXMLDocumentationFiles>
+            <GenerateXMLDocumentationFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</GenerateXMLDocumentationFiles>
+            <GenerateXMLDocumentationFiles Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</GenerateXMLDocumentationFiles>
+            <GenerateXMLDocumentationFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</GenerateXMLDocumentationFiles>
+            <InlineFunctionExpansion Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Default</InlineFunctionExpansion>
+            <InlineFunctionExpansion Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Default</InlineFunctionExpansion>
+            <InlineFunctionExpansion Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Default</InlineFunctionExpansion>
+            <InlineFunctionExpansion Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Default</InlineFunctionExpansion>
+            <IntrinsicFunctions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</IntrinsicFunctions>
+            <IntrinsicFunctions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</IntrinsicFunctions>
+            <IntrinsicFunctions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</IntrinsicFunctions>
+            <IntrinsicFunctions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</IntrinsicFunctions>
+            <IgnoreStandardIncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</IgnoreStandardIncludePath>
+            <IgnoreStandardIncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</IgnoreStandardIncludePath>
+            <IgnoreStandardIncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</IgnoreStandardIncludePath>
+            <IgnoreStandardIncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</IgnoreStandardIncludePath>
+            <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Default</LanguageStandard>
+            <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Default</LanguageStandard>
+            <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Default</LanguageStandard>
+            <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Default</LanguageStandard>
+            <LanguageStandard_C Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Default</LanguageStandard_C>
+            <LanguageStandard_C Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Default</LanguageStandard_C>
+            <LanguageStandard_C Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Default</LanguageStandard_C>
+            <LanguageStandard_C Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Default</LanguageStandard_C>
+            <MinimalRebuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</MinimalRebuild>
+            <MinimalRebuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</MinimalRebuild>
+            <MinimalRebuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</MinimalRebuild>
+            <MinimalRebuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</MinimalRebuild>
+            <ModuleDependenciesFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">x64\Debug\</ModuleDependenciesFile>
+            <ModuleDependenciesFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">x64\Debug\</ModuleDependenciesFile>
+            <ModuleDependenciesFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">x64\Debug\</ModuleDependenciesFile>
+            <ModuleDependenciesFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">x64\Debug\</ModuleDependenciesFile>
+            <ModuleOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">x64\Debug\</ModuleOutputFile>
+            <ModuleOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">x64\Debug\</ModuleOutputFile>
+            <ModuleOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">x64\Debug\</ModuleOutputFile>
+            <ModuleOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">x64\Debug\</ModuleOutputFile>
+            <OmitDefaultLibName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</OmitDefaultLibName>
+            <OmitDefaultLibName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</OmitDefaultLibName>
+            <OmitDefaultLibName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</OmitDefaultLibName>
+            <OmitDefaultLibName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</OmitDefaultLibName>
+            <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Neither</FavorSizeOrSpeed>
+            <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Neither</FavorSizeOrSpeed>
+            <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Neither</FavorSizeOrSpeed>
+            <FavorSizeOrSpeed Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Neither</FavorSizeOrSpeed>
+            <WholeProgramOptimization Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</WholeProgramOptimization>
+            <WholeProgramOptimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</WholeProgramOptimization>
+            <WholeProgramOptimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</WholeProgramOptimization>
+            <WholeProgramOptimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</WholeProgramOptimization>
+            <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">x64\Debug\</ObjectFileName>
+            <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">x64\Debug\</ObjectFileName>
+            <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">x64\Debug\</ObjectFileName>
+            <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">x64\Debug\</ObjectFileName>
+            <CallingConvention Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Cdecl</CallingConvention>
+            <CallingConvention Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Cdecl</CallingConvention>
+            <CallingConvention Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Cdecl</CallingConvention>
+            <CallingConvention Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Cdecl</CallingConvention>
+            <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">x64\Debug\vc143.pdb</ProgramDataBaseFileName>
+            <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">x64\Debug\vc143.pdb</ProgramDataBaseFileName>
+            <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">x64\Debug\vc143.pdb</ProgramDataBaseFileName>
+            <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">x64\Debug\vc143.pdb</ProgramDataBaseFileName>
+            <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+            <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+            <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+            <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+            <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdafx.h</PrecompiledHeaderFile>
+            <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdafx.h</PrecompiledHeaderFile>
+            <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">stdafx.h</PrecompiledHeaderFile>
+            <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">stdafx.h</PrecompiledHeaderFile>
+            <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">x64\Debug\Part5.pch</PrecompiledHeaderOutputFile>
+            <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">x64\Debug\Part5.pch</PrecompiledHeaderOutputFile>
+            <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">x64\Debug\Part5.pch</PrecompiledHeaderOutputFile>
+            <PrecompiledHeaderOutputFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">x64\Debug\Part5.pch</PrecompiledHeaderOutputFile>
+            <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</PreprocessToFile>
+            <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</PreprocessToFile>
+            <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</PreprocessToFile>
+            <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</PreprocessToFile>
+            <PreprocessKeepComments Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</PreprocessKeepComments>
+            <PreprocessKeepComments Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</PreprocessKeepComments>
+            <PreprocessKeepComments Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</PreprocessKeepComments>
+            <PreprocessKeepComments Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</PreprocessKeepComments>
+            <PreprocessSuppressLineNumbers Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</PreprocessSuppressLineNumbers>
+            <PreprocessSuppressLineNumbers Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</PreprocessSuppressLineNumbers>
+            <PreprocessSuppressLineNumbers Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</PreprocessSuppressLineNumbers>
+            <PreprocessSuppressLineNumbers Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</PreprocessSuppressLineNumbers>
+            <RemoveUnreferencedCodeData Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</RemoveUnreferencedCodeData>
+            <RemoveUnreferencedCodeData Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</RemoveUnreferencedCodeData>
+            <RemoveUnreferencedCodeData Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</RemoveUnreferencedCodeData>
+            <RemoveUnreferencedCodeData Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</RemoveUnreferencedCodeData>
+            <ScanSourceForModuleDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ScanSourceForModuleDependencies>
+            <ScanSourceForModuleDependencies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ScanSourceForModuleDependencies>
+            <ScanSourceForModuleDependencies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ScanSourceForModuleDependencies>
+            <ScanSourceForModuleDependencies Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ScanSourceForModuleDependencies>
+            <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ShowIncludes>
+            <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ShowIncludes>
+            <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ShowIncludes>
+            <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ShowIncludes>
+            <SourceDependenciesFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">x64\Debug\</SourceDependenciesFile>
+            <SourceDependenciesFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">x64\Debug\</SourceDependenciesFile>
+            <SourceDependenciesFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">x64\Debug\</SourceDependenciesFile>
+            <SourceDependenciesFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">x64\Debug\</SourceDependenciesFile>
+            <SuppressStartupBanner Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</SuppressStartupBanner>
+            <SuppressStartupBanner Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</SuppressStartupBanner>
+            <SuppressStartupBanner Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</SuppressStartupBanner>
+            <SuppressStartupBanner Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</SuppressStartupBanner>
+            <BufferSecurityCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</BufferSecurityCheck>
+            <BufferSecurityCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BufferSecurityCheck>
+            <BufferSecurityCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</BufferSecurityCheck>
+            <BufferSecurityCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</BufferSecurityCheck>
+            <SmallerTypeCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SmallerTypeCheck>
+            <SmallerTypeCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SmallerTypeCheck>
+            <SmallerTypeCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SmallerTypeCheck>
+            <SmallerTypeCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SmallerTypeCheck>
+            <SpectreMitigation Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SpectreMitigation>
+            <SpectreMitigation Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</SpectreMitigation>
+            <SpectreMitigation Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</SpectreMitigation>
+            <SpectreMitigation Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</SpectreMitigation>
+            <StructMemberAlignment Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Default</StructMemberAlignment>
+            <StructMemberAlignment Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Default</StructMemberAlignment>
+            <StructMemberAlignment Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Default</StructMemberAlignment>
+            <StructMemberAlignment Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Default</StructMemberAlignment>
+            <TrackerLogDirectory Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">x64\Debug\Part5.tlog\</TrackerLogDirectory>
+            <TrackerLogDirectory Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">x64\Debug\Part5.tlog\</TrackerLogDirectory>
+            <TrackerLogDirectory Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">x64\Debug\Part5.tlog\</TrackerLogDirectory>
+            <TrackerLogDirectory Condition="'$(Configuration)|$(Platform)'=='Release|x64'">x64\Debug\Part5.tlog\</TrackerLogDirectory>
+            <TranslateIncludes Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</TranslateIncludes>
+            <TranslateIncludes Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</TranslateIncludes>
+            <TranslateIncludes Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</TranslateIncludes>
+            <TranslateIncludes Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</TranslateIncludes>
+            <MinimalRebuildFromTracking Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</MinimalRebuildFromTracking>
+            <MinimalRebuildFromTracking Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</MinimalRebuildFromTracking>
+            <MinimalRebuildFromTracking Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</MinimalRebuildFromTracking>
+            <MinimalRebuildFromTracking Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</MinimalRebuildFromTracking>
+            <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</TreatWarningAsError>
+            <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</TreatWarningAsError>
+            <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</TreatWarningAsError>
+            <TreatWarningAsError Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</TreatWarningAsError>
+            <TreatWChar_tAsBuiltInType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</TreatWChar_tAsBuiltInType>
+            <TreatWChar_tAsBuiltInType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</TreatWChar_tAsBuiltInType>
+            <TreatWChar_tAsBuiltInType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</TreatWChar_tAsBuiltInType>
+            <TreatWChar_tAsBuiltInType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</TreatWChar_tAsBuiltInType>
+            <UseFullPaths Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</UseFullPaths>
+            <UseFullPaths Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</UseFullPaths>
+            <UseFullPaths Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</UseFullPaths>
+            <UseFullPaths Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</UseFullPaths>
+            <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Level3</WarningLevel>
+            <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Level3</WarningLevel>
+            <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Level3</WarningLevel>
+            <WarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Level3</WarningLevel>
+            <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">x64\Debug\</XMLDocumentationFileName>
+            <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">x64\Debug\</XMLDocumentationFileName>
+            <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">x64\Debug\</XMLDocumentationFileName>
+            <XMLDocumentationFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">x64\Debug\</XMLDocumentationFileName>
+            <DebugInformationFormat Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">EditAndContinue</DebugInformationFormat>
+            <DebugInformationFormat Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">EditAndContinue</DebugInformationFormat>
+            <DebugInformationFormat Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">EditAndContinue</DebugInformationFormat>
+            <DebugInformationFormat Condition="'$(Configuration)|$(Platform)'=='Release|x64'">EditAndContinue</DebugInformationFormat>
+            <IntelJCCErratum Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</IntelJCCErratum>
+            <IntelJCCErratum Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</IntelJCCErratum>
+            <IntelJCCErratum Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</IntelJCCErratum>
+            <IntelJCCErratum Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</IntelJCCErratum>
+            <BuildStlModules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</BuildStlModules>
+            <BuildStlModules Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</BuildStlModules>
+            <BuildStlModules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</BuildStlModules>
+            <BuildStlModules Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</BuildStlModules>
+            <TreatAngleIncludeAsExternal Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</TreatAngleIncludeAsExternal>
+            <TreatAngleIncludeAsExternal Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</TreatAngleIncludeAsExternal>
+            <TreatAngleIncludeAsExternal Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</TreatAngleIncludeAsExternal>
+            <TreatAngleIncludeAsExternal Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</TreatAngleIncludeAsExternal>
+            <ExternalWarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">InheritWarningLevel</ExternalWarningLevel>
+            <ExternalWarningLevel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">InheritWarningLevel</ExternalWarningLevel>
+            <ExternalWarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">InheritWarningLevel</ExternalWarningLevel>
+            <ExternalWarningLevel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">InheritWarningLevel</ExternalWarningLevel>
+            <TreatExternalTemplatesAsInternal Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</TreatExternalTemplatesAsInternal>
+            <TreatExternalTemplatesAsInternal Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</TreatExternalTemplatesAsInternal>
+            <TreatExternalTemplatesAsInternal Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</TreatExternalTemplatesAsInternal>
+            <TreatExternalTemplatesAsInternal Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</TreatExternalTemplatesAsInternal>
+            <DisableAnalyzeExternal Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</DisableAnalyzeExternal>
+            <DisableAnalyzeExternal Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</DisableAnalyzeExternal>
+            <DisableAnalyzeExternal Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</DisableAnalyzeExternal>
+            <DisableAnalyzeExternal Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</DisableAnalyzeExternal>
+            <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">_DEBUG;_WINDOWS;_UNICODE;UNICODE;</PreprocessorDefinitions>
+            <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_DEBUG;_WINDOWS;_UNICODE;UNICODE;</PreprocessorDefinitions>
+            <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">_DEBUG;_WINDOWS;_UNICODE;UNICODE;</PreprocessorDefinitions>
+            <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">_DEBUG;_WINDOWS;_UNICODE;UNICODE;</PreprocessorDefinitions>
+            <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</SDLCheck>
+            <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</SDLCheck>
+            <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</SDLCheck>
+            <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</SDLCheck>
+            <LinkCompiled Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkCompiled>
+            <LinkCompiled Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkCompiled>
+            <LinkCompiled Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</LinkCompiled>
+            <LinkCompiled Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</LinkCompiled>
+        </ClCompile>
+    </ItemGroup>
+    <ItemGroup>
+        <ResourceCompile Include="Part5.rc"/>
+    </ItemGroup>
+    <ItemGroup>
+        <Image Include="Part5.ico"/>
+        <Image Include="small.ico"/>
+    </ItemGroup>
+    <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
+    <ImportGroup Label="ExtensionTargets">
+    </ImportGroup>
+</Project>
