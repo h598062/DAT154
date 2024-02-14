@@ -580,7 +580,25 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		tl2->cleanUp();
 		delete tl1;
 		delete tl2;
+		
+		// Clean up brushes and pens
 		DeleteObject(roadBrush);
+		DeleteObject(redBrush);
+		DeleteObject(yellowBrush);
+		DeleteObject(greenBrush);
+		DeleteObject(blueBrush);
+		DeleteObject(blackBrush);
+		DeleteObject(whiteBrush);
+		DeleteObject(pinkBrush);
+		DeleteObject(orangeBrush);
+		DeleteObject(purpleBrush);
+		DeleteObject(brownBrush);
+		DeleteObject(cyanBrush);
+		DeleteObject(offBrush);
+		DeleteObject(tlOutlinePen);
+		DeleteObject(noPen);
+		DeleteObject(bgBrush);
+
 		PostQuitMessage(0);
 		break;
 	default:
