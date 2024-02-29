@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33424.131
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "1 - Windows Forms Graphics and Animation", "WinForms Graphics\1 - Windows Forms Graphics and Animation.csproj", "{13FDF67E-6101-45F0-BF3D-3F6C4A85497A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "2 - Simple WPF Example - XAML", "Simple WPF Example\2 - Simple WPF Example - XAML.csproj", "{A2047F73-B325-46E3-A96C-935012334F34}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "3 - Simple WFP Example - Code", "Simple WFP Example - Code\3 - Simple WFP Example - Code.csproj", "{900F3CF8-9383-4921-B8E7-3D37D3D52257}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "4 - Simple WFP Animation", "Simple WFP Animation\4 - Simple WFP Animation.csproj", "{0FCCE146-75C7-4168-A4A6-C0334DC8808C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "5 - WPF Animation", "WPF Animation\5 - WPF Animation.csproj", "{D2F09E89-3F5E-4396-B35A-EC3924876521}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "6 - MAUI Animation", "MAUI Animation\6 - MAUI Animation.csproj", "{092A7F82-A2A9-445E-9FDB-73E6A2FFDA47}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{13FDF67E-6101-45F0-BF3D-3F6C4A85497A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13FDF67E-6101-45F0-BF3D-3F6C4A85497A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13FDF67E-6101-45F0-BF3D-3F6C4A85497A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13FDF67E-6101-45F0-BF3D-3F6C4A85497A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2047F73-B325-46E3-A96C-935012334F34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2047F73-B325-46E3-A96C-935012334F34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2047F73-B325-46E3-A96C-935012334F34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2047F73-B325-46E3-A96C-935012334F34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{900F3CF8-9383-4921-B8E7-3D37D3D52257}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{900F3CF8-9383-4921-B8E7-3D37D3D52257}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{900F3CF8-9383-4921-B8E7-3D37D3D52257}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{900F3CF8-9383-4921-B8E7-3D37D3D52257}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FCCE146-75C7-4168-A4A6-C0334DC8808C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FCCE146-75C7-4168-A4A6-C0334DC8808C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FCCE146-75C7-4168-A4A6-C0334DC8808C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FCCE146-75C7-4168-A4A6-C0334DC8808C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2F09E89-3F5E-4396-B35A-EC3924876521}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2F09E89-3F5E-4396-B35A-EC3924876521}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2F09E89-3F5E-4396-B35A-EC3924876521}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2F09E89-3F5E-4396-B35A-EC3924876521}.Release|Any CPU.Build.0 = Release|Any CPU
+		{092A7F82-A2A9-445E-9FDB-73E6A2FFDA47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{092A7F82-A2A9-445E-9FDB-73E6A2FFDA47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{092A7F82-A2A9-445E-9FDB-73E6A2FFDA47}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{092A7F82-A2A9-445E-9FDB-73E6A2FFDA47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{092A7F82-A2A9-445E-9FDB-73E6A2FFDA47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{092A7F82-A2A9-445E-9FDB-73E6A2FFDA47}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1966FAC0-C78D-4292-81A8-AF1AC418A6A9}
+	EndGlobalSection
+EndGlobal
