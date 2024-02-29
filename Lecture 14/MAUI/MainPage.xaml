@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MAUI.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="25" Padding="30,0" VerticalOptions="Center">
+
+            <Label Text="Try to write some text and click the button" />
+            <Entry Placeholder="Type some text here..." x:Name="txtField" Text="" WidthRequest="300"/>
+            <Button x:Name="button" Text="Button" Pressed="Button_Click" WidthRequest="300"/>
+            
+            <Button x:Name="quitButton" Margin="0,100,0,0" Text="Quit" Pressed="QuitButton_Click" HorizontalOptions="EndAndExpand"  WidthRequest="100"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+
+</ContentPage>
