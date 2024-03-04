@@ -1,0 +1,17 @@
+﻿<Window x:Class="Routed_Events___Bubbling.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Routed_Events___Bubbling"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <GroupBox x:Name="outer" Margin="25,25,25,25" 
+                  Header="GroupBox">
+            <Label x:Name="inner" Content="You can click me" 
+                   Width="150" Height="50" Background="Yellow"/>
+        </GroupBox>
+    </Grid>
+
+</Window>
