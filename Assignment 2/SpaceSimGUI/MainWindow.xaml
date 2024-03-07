@@ -7,6 +7,9 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button Height="20" Width="50">Knapp</Button>
+        <Button Height="50" Width="200" Name="StartKnapp" Click="StartKnapp_OnClick">Start Sim</Button>
+        <Canvas Margin="10,10,10,10" Name="SimCanvas">
+            
+        </Canvas>
     </Grid>
 </Window>

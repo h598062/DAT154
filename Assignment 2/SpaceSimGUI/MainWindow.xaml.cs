@@ -20,4 +20,20 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
     }
+
+    private void StartKnapp_OnClick(object sender, RoutedEventArgs e)
+    {
+        StartKnapp.Visibility = Visibility.Hidden;
+        Console.WriteLine("Wallah");
+        Ellipse eclipse = new Ellipse
+        {
+            Width = 100,
+            Height = 100,
+            Fill = Brushes.Red,
+            Margin = new Thickness(1),
+            Stroke = Brushes.Black,
+            ToolTip = "This is a planet!"
+        };
+        SimCanvas.Children.Add(eclipse);
+    }
 }
