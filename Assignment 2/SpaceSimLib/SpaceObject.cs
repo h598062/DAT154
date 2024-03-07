@@ -23,6 +23,8 @@ namespace SpaceSimLib
             Console.WriteLine($"{Name} ({DiameterKm} km) - {Colour}");
         }
         
+        public abstract Vector2 GetPosition(float timeDays);
+        
     }
 
 
@@ -48,7 +50,7 @@ namespace SpaceSimLib
             this.OrbitalRadiuskKm = orbitalRadiuskKm;
         }
 
-        public Vector2 GetPosition(float timeDays)
+        public override Vector2 GetPosition(float timeDays)
         {
             float angle = timeDays / OrbitalPeriodDays * 2 * (float)Math.PI;
             return new Vector2((float)Math.Cos(angle) * OrbitalRadiuskKm,
@@ -77,6 +79,11 @@ namespace SpaceSimLib
         {
             Console.Write("Star: ");
             base.Draw();
+        }
+        
+        public override Vector2 GetPosition(float timeDays)
+        {
+            return new Vector2(0, 0);
         }
     }
 
