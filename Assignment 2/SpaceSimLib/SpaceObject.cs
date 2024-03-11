@@ -11,11 +11,14 @@ namespace SpaceSimLib
         public long DiameterKm { get; }
         public string Colour { get; }
 
+        public List<OrbitalBody> Orbiters;
+
         protected SpaceObject(String name, long diameterKm, String colour)
         {
             this.Name = name;
             this.DiameterKm = diameterKm;
             this.Colour = colour;
+            Orbiters = new List<OrbitalBody>();
         }
 
         public virtual void Draw()
@@ -48,6 +51,7 @@ namespace SpaceSimLib
             this.Orbiting = orbiting;
             this.OrbitalPeriodDays = orbitalPeriodDays;
             this.OrbitalRadiuskKm = orbitalRadiuskKm;
+            orbiting.Orbiters.Add(this);
         }
 
         /// <summary>
@@ -136,7 +140,7 @@ namespace SpaceSimLib
     /// <summary>
     /// Planet, but smaller
     /// </summary>
-    public class DwarfPlanet : OrbitalBody
+    public class DwarfPlanet : Planet
     {
         public DwarfPlanet(String name, long diameterKm, String colour,
             Star orbiting, float orbitalPeriodDays, long orbitalRadiuskKm) :
@@ -146,7 +150,7 @@ namespace SpaceSimLib
 
         public override void Draw()
         {
-            Console.Write("Dwarf Planet: ");
+            Console.Write("Dwarf ");
             base.Draw();
         }
     }

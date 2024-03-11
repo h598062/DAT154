@@ -5,15 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SpaceSimGUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800">
-    <Grid>
-        <Button Height="50" Width="200" Name="StartKnapp" Click="StartKnapp_OnClick">Start Sim</Button>
-        <Button Height="30" Width="100" VerticalAlignment="Bottom" Margin="5" Name="AddPlanets" Visibility="Hidden" 
-        Click="AddPlanets_OnClick">Add Planets</Button>
-        <Button Height="30" Width="100" VerticalAlignment="Bottom" Margin="5" Name="AddMoons" Visibility="Hidden" 
-                Click="AddMoons_OnClick">Add Moons</Button>
-        <Canvas Margin="10,10,10,10" Name="SimCanvas">
-            
-        </Canvas>
+        Name="SpaceSimWindow"
+        Title="Space Simulator" Height="1200" Width="1200" ResizeMode="NoResize">
+    <Grid Name="MainGrid">
+        <Canvas Margin="5" Name="MainCanvas" Width="1150" Height="1150" Background="LightGray"></Canvas>
+        <Canvas Margin="5" Name="PlanetCanvas" Width="1150" Height="1150" Background="LightGray" 
+        Visibility="Hidden"></Canvas >
+        <Button Height="30" Width="100" Name="StartKnapp" Margin="10" VerticalAlignment="Center" 
+        Click="StartKnapp_OnClick">Start Sim</Button>
     </Grid>
 </Window>

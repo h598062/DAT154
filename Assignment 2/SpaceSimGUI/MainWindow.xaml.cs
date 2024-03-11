@@ -18,50 +18,87 @@ namespace SpaceSimGUI;
 public partial class MainWindow : Window
 {
     private Solarsystem _solarsystem;
-    private readonly System.Windows.Threading.DispatcherTimer timer;
-
-    private List<Ellipse> ellipses = [];
-
-    // orbit i 1 = 1000km
-    private long largestOrbit = 0;
-
-    private int dag = 0;
-
+    private OrbitSystem mainOrbitSystem;
+    private OrbitSystem planetOrbitSystem;
+    private readonly System.Windows.Threading.DispatcherTimer timerFullView;
+    public event Action<int> UpdatePositionsFullView;
+    private int dagerFullView = 0;
+    
     public MainWindow()
     {
         InitializeComponent();
 
         _solarsystem = new Solarsystem();
-        foreach (var spaceObject in _solarsystem.SolarSystem)
+
+
+        timerFullView = new System.Windows.Threading.DispatcherTimer
         {
-            if (spaceObject is OrbitalBody orbitalBody && orbitalBody.OrbitalRadiuskKm > largestOrbit)
+            Interval = TimeSpan.FromTicks(10000)
+        };
+        timerFullView.Tick += Tickv2;
+        this.KeyDown += InputHandler;
+    }
+
+    private void InputHandler(object sender, KeyEventArgs e)
+    {
+        Console.WriteLine(e.Key);
+
+        switch (e.Key)
+        {
+            case Key.Up:
             {
-                largestOrbit = orbitalBody.OrbitalRadiuskKm;
+                timerFullView.Stop();
+                timerFullView.Interval = timerFullView.Interval.Add(TimeSpan.FromTicks(10));
+                timerFullView.Start();
+                break;
             }
+            case Key.Down:
+            {
+                timerFullView.Stop();
+                timerFullView.Interval = timerFullView.Interval.Subtract(TimeSpan.FromTicks(10));
+                timerFullView.Start();
+                break;
+            }
+            case Key.Right:
+            {
+                timerFullView.Stop();
+                timerFullView.Interval = timerFullView.Interval.Add(TimeSpan.FromTicks(1000));
+                timerFullView.Start();
+                break;
+            }
+            case Key.Left:
+            {
+                timerFullView.Stop();
+                timerFullView.Interval = timerFullView.Interval.Subtract(TimeSpan.FromTicks(1000));
+                timerFullView.Start();
+                break;
+            }
+            case Key.Space:
+            {
+                timerFullView.IsEnabled = !timerFullView.IsEnabled;
+                break;
+            }
+            case Key.Enter:
+            {
+                mainOrbitSystem.ToggleOrbit();
+                planetOrbitSystem?.ToggleOrbit();
+                break;
+            }
+            default:
+                break;
         }
 
-        timer = new System.Windows.Threading.DispatcherTimer
-        {
-            Interval = new TimeSpan(20000)
-        };
-        timer.Tick += Tick;
+
     }
 
     private void Tick(object sender, EventArgs e)
     {
-        dag++;
-        foreach (var ellipse in ellipses)
-        {
-            var spaceObject = _solarsystem.SolarSystem.Find(x => x.Name.Replace(" ", "") == ellipse.Name);
-            if (spaceObject == null) continue;
-            Canvas.SetLeft(ellipse,
-                Map(spaceObject.GetPosition(dag).X, -largestOrbit, largestOrbit, 0, (float)SimCanvas
-                    .RenderSize
-                    .Width) - ellipse.Width / 2);
-            Canvas.SetTop(ellipse,
-                Map(spaceObject.GetPosition(dag).Y, -largestOrbit, largestOrbit, 0,
-                    (float)SimCanvas.RenderSize.Height) - ellipse.Height / 2);
-        }
+        mainOrbitSystem.Update();
+    }
+    
+    private void Tickv2(object sender, EventArgs e)
+    {
+        UpdatePositionsFullView(dagerFullView++);
     }
 
     private void StartKnapp_OnClick(object sender, RoutedEventArgs e)
@@ -69,113 +106,210 @@ public partial class MainWindow : Window
         StartKnapp.Visibility = Visibility.Hidden;
         Console.WriteLine("StartKnapp");
 
-        Ellipse sun = new Ellipse
+        mainOrbitSystem = new OrbitSystem(_solarsystem.Sun, MainCanvas);
+        foreach (var obj in mainOrbitSystem.Orbiters)
         {
-            Name = _solarsystem.Sun.Name.Replace(" ", ""), // Remove spaces to avoid errors
-            Width = 50,
-            Height = 50,
-            Fill = ColourSelector(_solarsystem.Sun.Colour),
-            Margin = new Thickness(1),
-            Stroke = Brushes.Black,
-            ToolTip = _solarsystem.Sun.Name
-        };
-        SimCanvas.Children.Add(sun);
-        ellipses.Add(sun);
-        Canvas.SetLeft(sun,
-            Map(_solarsystem.Sun.GetPosition(dag).X, -largestOrbit, largestOrbit, 0, (float)SimCanvas
-                .RenderSize
-                .Width) - sun.Width / 2);
-        Canvas.SetTop(sun,
-            Map(_solarsystem.Sun.GetPosition(dag).Y, -largestOrbit, largestOrbit, 0,
-                (float)SimCanvas.RenderSize.Height) - sun.Height / 2);
-
-
-        // Enable adding planets
-        AddPlanets.Visibility = Visibility.Visible;
-        timer.Start();
+            obj.OrbiterClicked += HandleOrbiterClicked;
+            UpdatePositionsFullView += obj.UpdatePositionFullView;
+        }
+        timerFullView.Start();
     }
-
-    private void AddPlanets_OnClick(object sender, RoutedEventArgs e)
+    
+    private void HandleOrbiterClicked(OrbitalBody parent)
     {
-        Console.WriteLine("AddPlanets");
-
-        _solarsystem.Planets.ForEach(planet =>
+        if (MainCanvas.Visibility == Visibility.Hidden)
         {
-            Ellipse ellipse = new Ellipse
-            {
-                Name = planet.Name.Replace(" ", ""), // Remove spaces to avoid errors
-                Width = 20,
-                Height = 20,
-                Fill = ColourSelector(planet.Colour),
-                Margin = new Thickness(1),
-                Stroke = Brushes.Black,
-                ToolTip = planet.Name
-            };
-            SimCanvas.Children.Add(ellipse);
-            ellipses.Add(ellipse);
-            Canvas.SetLeft(ellipse,
-                Map(planet.GetPosition(dag).X, -largestOrbit, largestOrbit, 0, (float)SimCanvas.RenderSize
-                    .Width) - ellipse.Width / 2);
-            Canvas.SetTop(ellipse,
-                Map(planet.GetPosition(dag).Y, -largestOrbit, largestOrbit, 0,
-                    (float)SimCanvas.RenderSize.Height) - ellipse.Height / 2);
-        });
-
-        // Enable adding moons
-        AddMoons.Visibility = Visibility.Visible;
-        // Hide adding planets
-        AddPlanets.Visibility = Visibility.Hidden;
-    }
-
-    private void AddMoons_OnClick(object sender, RoutedEventArgs e)
-    {
-        Console.WriteLine("AddMoons");
-
-        _solarsystem.Moons.ForEach(moon =>
+            return;
+        }
+        MainCanvas.Visibility = Visibility.Hidden;
+        PlanetCanvas.Visibility = Visibility.Visible;
+        planetOrbitSystem = new OrbitSystem(parent, PlanetCanvas);
+        planetOrbitSystem.CenterObjectClicked += HandleCenterObjectClicked;
+        foreach (var obj in planetOrbitSystem.Orbiters)
         {
-            Ellipse ellipse = new Ellipse
-            {
-                Name = moon.Name.Replace(" ", ""), // Remove spaces to avoid errors
-                Width = 10,
-                Height = 10,
-                Fill = ColourSelector(moon.Colour),
-                Margin = new Thickness(1),
-                Stroke = Brushes.Black,
-                ToolTip = moon.Name
-            };
-            SimCanvas.Children.Add(ellipse);
-            ellipses.Add(ellipse);
-            Canvas.SetLeft(ellipse,
-                Map(moon.GetPosition(dag).X, -largestOrbit, largestOrbit, 0, (float)SimCanvas.RenderSize
-                    .Width) - ellipse.Width / 2);
-            Canvas.SetTop(ellipse,
-                Map(moon.GetPosition(dag).Y, -largestOrbit, largestOrbit, 0,
-                    (float)SimCanvas.RenderSize.Height) - ellipse.Height / 2);
-        });
-
-
-        // Hide add moons
-        AddMoons.Visibility = Visibility.Hidden;
+            UpdatePositionsFullView += obj.UpdatePositionFullView;
+        }
     }
-
-    private Brush ColourSelector(String colour)
+    
+    private void HandleCenterObjectClicked(SpaceObject parent)
     {
-        return colour switch
+        if (MainCanvas.Visibility == Visibility.Visible)
         {
-            "Yellow" => Brushes.Yellow,
-            "Blue" => Brushes.Blue,
-            "Red" => Brushes.Red,
-            "Green" => Brushes.Green,
-            "White" => Brushes.White,
-            "Black" => Brushes.Black,
-            "Brown" => Brushes.Brown,
-            _ => Brushes.Gray
-        };
-    }
-
-    private static float Map(float value, float fromLow, float fromHigh, float toLow, float toHigh)
-    {
-        // Map the value from the input range to the output range
-        return (value - fromLow) * (toHigh - toLow) / (fromHigh - fromLow) + toLow;
+            return;
+        }
+        MainCanvas.Visibility = Visibility.Visible;
+        PlanetCanvas.Visibility = Visibility.Hidden;
+        foreach (var obj in planetOrbitSystem.Orbiters)
+        {
+            UpdatePositionsFullView -= obj.UpdatePositionFullView;
+        }
+        planetOrbitSystem.Destroy(PlanetCanvas);
     }
 }
+
+public class OrbitSystem
+{
+    public SpaceObject CenterObject { get; set; }
+    public Ellipse CenterEllipse { get; set; }
+    public List<CompositeOrbiter> Orbiters { get; set; }
+    public float maxOrbit { get; set; }
+    public float maxDiameter { get; set; }
+    public int days = 0;
+    private bool _showOrbit = true;
+    
+    public delegate void CenterObjectClickedHandler(SpaceObject parent);
+    public event CenterObjectClickedHandler CenterObjectClicked;
+
+    public OrbitSystem(SpaceObject centerObject, Canvas canvas)
+    {
+        maxDiameter = Helpers.MaxDiameter(centerObject);
+        maxOrbit = Helpers.MaxOrbit(centerObject);
+        Orbiters = new List<CompositeOrbiter>();
+        CenterObject = centerObject;
+        CenterEllipse = new Ellipse
+        {
+            Width = 100,
+            Height = 100,
+            Fill = Helpers.ColourSelector(CenterObject.Colour),
+            Margin = new Thickness(1),
+            Stroke = Brushes.Black,
+            Name = CenterObject.Name.Replace(" ", ""),
+            ToolTip = CenterObject.Name,
+            Cursor = Cursors.Hand
+        };
+        canvas.Children.Add(CenterEllipse);
+        Canvas.SetZIndex(CenterEllipse, 1);
+        Canvas.SetLeft(CenterEllipse, (float)canvas.RenderSize.Width / 2 - CenterEllipse.Width / 2);
+        Canvas.SetTop(CenterEllipse, (float)canvas.RenderSize.Height / 2 - CenterEllipse.Height / 2);
+        CenterEllipse.MouseLeftButtonDown += OnClick;
+        
+        foreach (var obj in CenterObject.Orbiters)
+        {
+            float diameter = Helpers.Map(obj.DiameterKm, 0, maxDiameter, 5, 25);
+            float orbit = Helpers.Map(obj.OrbitalRadiuskKm, 0, maxOrbit * 1.04f, 0,
+                (float)canvas
+                    .RenderSize
+                    .Width / 2);
+
+            Orbiters.Add(new CompositeOrbiter(obj, orbit, diameter, canvas));
+        }
+    }
+
+    public void Update()
+    {
+        days++;
+        foreach (var orbiter in Orbiters)
+        {
+            orbiter.UpdatePositionFullView(days);
+        }
+    }
+    
+    public void ToggleOrbit()
+    {
+        _showOrbit = !_showOrbit;
+        foreach (var orbiter in Orbiters)
+        {
+            orbiter.ShowOrbit(_showOrbit);
+        }
+    }
+    
+    public void OnClick(object sender, RoutedEventArgs e)
+    {
+        Console.WriteLine(CenterObject.Name);
+        CenterObjectClicked?.Invoke(CenterObject);
+    }
+
+    public void Destroy(Canvas canvas)
+    {
+        foreach (var orbiter in Orbiters)
+        {
+            orbiter.Destroy(canvas);
+        }
+        CenterEllipse.MouseLeftButtonDown -= OnClick;
+        canvas.Children.Remove(CenterEllipse);
+    }
+}
+
+public class CompositeOrbiter
+    {
+        private Ellipse _ellipse;
+        private Ellipse _orbitEllipse;
+        private OrbitalBody _ob;
+
+        private double _orbitRadius;
+        private double _centerX;
+        private double _centerY;
+        private double _diameter;
+        
+        public delegate void OrbiterClickedHandler(OrbitalBody parent);
+        public event OrbiterClickedHandler OrbiterClicked;
+
+        public CompositeOrbiter(OrbitalBody ob, double orbitRadius, double diameter, Canvas canvas)
+        {
+            _centerX = canvas.RenderSize.Width / 2;
+            _centerY = canvas.RenderSize.Height / 2;
+            _orbitRadius = orbitRadius;
+            _diameter = diameter;
+            _ob = ob;
+            
+            _orbitEllipse = new Ellipse
+            {
+                Width = orbitRadius * 2,
+                Height = orbitRadius * 2,
+                Fill = Brushes.Transparent,
+                Stroke = Brushes.Black,
+                StrokeThickness = 1,
+                Margin = new Thickness(1),
+                Opacity = 0.5,
+                StrokeDashArray = [2]
+            };
+            canvas.Children.Add(_orbitEllipse);
+            Canvas.SetZIndex(_orbitEllipse, 0);
+            Canvas.SetLeft(_orbitEllipse, _centerX - orbitRadius);
+            Canvas.SetTop(_orbitEllipse, _centerY - orbitRadius);
+            
+            _ellipse = new Ellipse
+            {
+                Width = diameter,
+                Height = diameter,
+                Fill = Helpers.ColourSelector(ob.Colour),
+                Margin = new Thickness(1),
+                Stroke = Brushes.Black,
+                Name = ob.Name.Replace(" ", ""),
+                ToolTip = ob.Name,
+                Cursor = Cursors.Hand
+            };
+            canvas.Children.Add(_ellipse);
+            Canvas.SetLeft(_ellipse, _centerX + orbitRadius - diameter / 2);
+            Canvas.SetTop(_ellipse, _centerY - diameter / 2);
+            Canvas.SetZIndex(_ellipse, 1);
+            _ellipse.MouseLeftButtonDown += OnClick;
+        }
+
+        public void UpdatePositionFullView(int days)
+        {
+            double angle = days / _ob.OrbitalPeriodDays * 2 * Math.PI;
+            double x = Math.Cos(angle) * _orbitRadius;
+            double y = Math.Sin(angle) * _orbitRadius;
+            Canvas.SetLeft(_ellipse, _centerX + x - _diameter / 2);
+            Canvas.SetTop(_ellipse, _centerY + y - _diameter / 2);
+        }
+        
+        public void ShowOrbit(bool show)
+        {
+            _orbitEllipse.Visibility = show ? Visibility.Visible : Visibility.Hidden;
+        }
+
+        public void OnClick(object sender, RoutedEventArgs e)
+        {
+            Console.WriteLine(_ob.Name);
+            OrbiterClicked?.Invoke(_ob);
+        }
+        
+        public void Destroy(Canvas canvas)
+        {
+            _ellipse.MouseLeftButtonDown -= OnClick;
+            canvas.Children.Remove(_ellipse);
+            canvas.Children.Remove(_orbitEllipse);
+        }
+    }
