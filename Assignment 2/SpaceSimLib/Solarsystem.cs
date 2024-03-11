@@ -38,7 +38,7 @@ public class Solarsystem
         Moon deimos = new Moon("Deimos", 12, "Grey", mars, 1.26f, 23);
         Moons.Add(deimos);
 
-        Planet jupiter = new Planet("Jupiter", 142984, "Brown", Sun, 4332.71f, 778330);
+        Planet jupiter = new Planet("Jupiter", 142984, "SaddleBrown", Sun, 4332.71f, 778330);
         Planets.Add(jupiter);
         Moon io = new Moon("Io", 3643, "Yellow", jupiter, 1.77f, 422);
         Moons.Add(io);
@@ -49,21 +49,21 @@ public class Solarsystem
         Moon callisto = new Moon("Callisto", 4821, "White", jupiter, 16.69f, 1883);
         Moons.Add(callisto);
 
-        Planet saturn = new Planet("Saturn", 120536, "Brown", Sun, 10759.5f, 1429400);
+        Planet saturn = new Planet("Saturn", 120536, "DarkGoldenrod", Sun, 10759.5f, 1429400);
         Planets.Add(saturn);
         Moon titan = new Moon("Titan", 5150, "Brown", saturn, 15.95f, 1221);
         Moons.Add(titan);
         Moon phoebe = new Moon("Phoebe", 220, "Brown", saturn, 550.48f, 12952);
         Moons.Add(phoebe);
 
-        Planet uranus = new Planet("Uranus", 51118, "Blue", Sun, 30685f, 2870990);
+        Planet uranus = new Planet("Uranus", 51118, "LightSkyBlue", Sun, 30685f, 2870990);
         Planets.Add(uranus);
         Moon titania = new Moon("Titania", 1578, "White", uranus, 8.71f, 436);
         Moons.Add(titania);
 
-        Planet neptune = new Planet("Neptune", 49528, "Blue", Sun, 60190f, 4504300);
+        Planet neptune = new Planet("Neptune", 49528, "DeepSkyBlue", Sun, 60190f, 4504300);
         Planets.Add(neptune);
-        Moon triton = new Moon("Triton", 2706, "Grey", neptune, 5.88f, 354800);
+        Moon triton = new Moon("Triton", 2706, "Gray", neptune, 5.88f, 354800);
         Moons.Add(triton);
 
         /*DwarfPlanet eris = new DwarfPlanet("Eris", 2326, "Brown", Sun, 203830, 149597);
@@ -74,7 +74,7 @@ public class Solarsystem
 
         DwarfPlanet pluto = new DwarfPlanet("Pluto", 2370, "Brown", Sun, 90520, 5913520);
         DwarfPlanets.Add(pluto);
-        Moon charon = new Moon("Charon", 1207, "Grey", pluto, 6.39f, 19571);
+        Moon charon = new Moon("Charon", 1207, "Gray", pluto, 6.39f, 19571);
         Moons.Add(charon);
 
 

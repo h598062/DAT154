@@ -12,7 +12,18 @@ public class Helpers
 
     public static Brush ColourSelector(String colour)
     {
-        return colour switch
+        String fixedcolour = colour == "Grey" ? "Gray" : colour;
+        var propertyInfo = typeof(Brushes).GetProperty(fixedcolour);
+        if (propertyInfo != null)
+        {
+            return (Brush)propertyInfo.GetValue(null, null);
+        }
+        else
+        {
+            // Default to Black brush if the specified color name is not found
+            return Brushes.Black;
+        }
+        /*return colour switch
         {
             "Yellow" => Brushes.Yellow,
             "Blue" => Brushes.Blue,
@@ -21,8 +32,28 @@ public class Helpers
             "White" => Brushes.White,
             "Black" => Brushes.Black,
             "Brown" => Brushes.Brown,
+            "Orange" => Brushes.Orange,
+            "Grey" => Brushes.Gray,
+            "Purple" => Brushes.Purple,
+            "Pink" => Brushes.Pink,
+            "Cyan" => Brushes.Cyan,
+            "Magenta" => Brushes.Magenta,
+            "Lime" => Brushes.Lime,
+            "Teal" => Brushes.Teal,
+            "Indigo" => Brushes.Indigo,
+            "Maroon" => Brushes.Maroon,
+            "Navy" => Brushes.Navy,
+            "Olive" => Brushes.Olive,
+            "Silver" => Brushes.Silver,
+            "Aqua" => Brushes.Aqua,
+            "Fuchsia" => Brushes.Fuchsia,
+            "Lavender" => Brushes.Lavender,
+            "DarkBrown" => Brushes.SaddleBrown,
+            "DarkGoldenrod" => Brushes.DarkGoldenrod,
+            "LightSkyBlue" => Brushes.LightSkyBlue,
+            "DeepSkyBlue" => Brushes.DeepSkyBlue,
             _ => Brushes.Gray
-        };
+        };*/
     }
     
     public static long MaxOrbit(SpaceObject obj)
