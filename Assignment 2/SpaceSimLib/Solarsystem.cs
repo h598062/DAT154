@@ -44,12 +44,12 @@ public class Solarsystem
 
         Planet neptune = new Planet("Neptune", 49528, "Blue", Sun, 60190f, 4504300);
 
-        DwarfPlanet eris = new DwarfPlanet("Eris", 2326, "Brown", Sun, 203830, 149597);
+        /*DwarfPlanet eris = new DwarfPlanet("Eris", 2326, "Brown", Sun, 203830, 149597);
         DwarfPlanet ceres = new DwarfPlanet("Ceres", 945, "Brown", Sun, 1680, 413700);
         DwarfPlanet pluto = new DwarfPlanet("Pluto", 2370, "Brown", Sun, 90520, 5913520);
 
 
-        Asteroid pallas = new Asteroid("Pallas", 544, "Grey", Sun, 1680, 413700);
+        Asteroid pallas = new Asteroid("Pallas", 544, "Grey", Sun, 1680, 413700);*/
 
 
         SolarSystem.Add(Sun);
@@ -58,14 +58,14 @@ public class Solarsystem
         Planets.Add(venus);
         Planets.Add(earth);
         Planets.Add(mars);
-        Planets.Add(jupiter);
-        Planets.Add(saturn);
+        /*Planets.Add(jupiter);*/
+        /*Planets.Add(saturn);
         Planets.Add(uranus);
-        Planets.Add(neptune);
+        Planets.Add(neptune);*/
 
-        DwarfPlanets.Add(pluto);
+        /*DwarfPlanets.Add(pluto);
         DwarfPlanets.Add(ceres);
-        DwarfPlanets.Add(eris);
+        DwarfPlanets.Add(eris);*/
         
         Moons.Add(moon);
         Moons.Add(phobos);
@@ -77,7 +77,7 @@ public class Solarsystem
         Moons.Add(titan);
         Moons.Add(phoebe);
         
-        Asteroids.Add(pallas);
+        /*Asteroids.Add(pallas);*/
         
         SolarSystem.AddRange(Planets);
         SolarSystem.AddRange(Moons);

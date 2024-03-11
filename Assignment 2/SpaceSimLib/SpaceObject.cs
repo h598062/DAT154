@@ -50,6 +50,11 @@ namespace SpaceSimLib
             this.OrbitalRadiuskKm = orbitalRadiuskKm;
         }
 
+        /// <summary>
+        /// Get the position of the object at a given time.
+        /// </summary>
+        /// <param name="timeDays"></param>
+        /// <returns></returns>
         public override Vector2 GetPosition(float timeDays)
         {
             float angle = timeDays / OrbitalPeriodDays * 2 * (float)Math.PI;
@@ -120,6 +125,11 @@ namespace SpaceSimLib
         {
             Console.Write("Moon: ");
             base.Draw();
+        }
+
+        public override Vector2 GetPosition(float timeDays)
+        {
+            return Orbiting.GetPosition(timeDays) + base.GetPosition(timeDays);
         }
     }
 
