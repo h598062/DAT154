@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASPNET_WEBAPP", "ASPNET_WEBAPP\ASPNET_WEBAPP.csproj", "{F89AAF60-80F0-47B0-8C53-4D4B33A03E81}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASPNET_BLAZOR", "ASPNET_BLAZOR\ASPNET_BLAZOR.csproj", "{3CAA0203-384A-4202-B6B0-2D5E73EF2695}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF", "WPF\WPF.csproj", "{28323B69-1BC6-498F-925A-5CBBFC1E04F6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F89AAF60-80F0-47B0-8C53-4D4B33A03E81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F89AAF60-80F0-47B0-8C53-4D4B33A03E81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F89AAF60-80F0-47B0-8C53-4D4B33A03E81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F89AAF60-80F0-47B0-8C53-4D4B33A03E81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CAA0203-384A-4202-B6B0-2D5E73EF2695}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CAA0203-384A-4202-B6B0-2D5E73EF2695}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CAA0203-384A-4202-B6B0-2D5E73EF2695}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CAA0203-384A-4202-B6B0-2D5E73EF2695}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28323B69-1BC6-498F-925A-5CBBFC1E04F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28323B69-1BC6-498F-925A-5CBBFC1E04F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28323B69-1BC6-498F-925A-5CBBFC1E04F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28323B69-1BC6-498F-925A-5CBBFC1E04F6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
