@@ -18,6 +18,12 @@
           "ASPNETCORE_ENVIRONMENT": "Development"
         }
       },
+      "hotReload": {
+        "commandName": "Executable",
+        "workingDirectory": "$(ProjectDir)",
+        "executablePath": "dotnet",
+        "commandLineArgs": "watch run debug --launch-profile https"
+      },
       "https": {
         "commandName": "Project",
         "dotnetRunMessages": true,

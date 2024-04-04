@@ -1,10 +1,15 @@
 using ASPNET_BLAZOR.Components;
+using ASPNET_BLAZOR.data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.AddDbContext<MyDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("InnenforHvl")));
 
 var app = builder.Build();
 
