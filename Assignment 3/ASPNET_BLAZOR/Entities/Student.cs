@@ -9,8 +9,8 @@ public class Student
     public int Id { get; set; }
 
     [Column("studentname", TypeName = "varchar(50)")]
-    public string StudentName { get; set; }
+    public string Name { get; set; }
 
     [Column("studentage", TypeName = "int")]
-    public int StudentAge { get; set; }
+    public int Age { get; set; }
 }

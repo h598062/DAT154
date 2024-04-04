@@ -9,7 +9,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 builder.Services.AddDbContext<MyDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("InnenforHvl")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("UtenforHvl")));
 
 var app = builder.Build();
 

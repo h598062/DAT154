@@ -1,0 +1,53 @@
+﻿@page "/search"
+@using ASPNET_BLAZOR.data
+@using ASPNET_BLAZOR.Entities
+@using Microsoft.EntityFrameworkCore
+@inject MyDbContext mdc
+@rendermode InteractiveServer
+
+<PageTitle>Search</PageTitle>
+
+<h1>Search</h1>
+<p>Search for a student by name</p>
+<input type="text" id="search" name="search" @bind="searchedName" placeholder="Student name" @oninput="SearchStudents" />
+@if(studentList.Count == 0)
+    {
+        <p style="color: red">No students found</p>
+    }
+    else
+    {
+        <p style="color: blue">Found @studentList.Count students</p>
+    }
+<ul>
+    @foreach (var student in studentList)
+    {
+        <li>@student.Name - @student.Age</li>
+    }
+</ul>
+@code {
+    private List<Student> studentList = new();
+
+    private string searchedName = "";
+    private CancellationTokenSource cts = new();
+
+
+    private async Task SearchStudents()
+    {
+        try
+        {
+            cts.Cancel();
+            cts = new CancellationTokenSource();
+            await Task.Delay(2000, cts.Token);
+            studentList = await mdc.Students
+                .Where(s => s.Name.Contains(searchedName))
+                .ToListAsync();
+            Console.WriteLine("SearchStudents() called");
+        }
+        catch (TaskCanceledException)
+        {
+            // Ignore
+            Console.WriteLine("SearchStudents() cancelled");
+        }
+    }
+
+}
