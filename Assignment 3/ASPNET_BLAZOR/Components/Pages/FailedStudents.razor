@@ -1,0 +1,65 @@
+﻿@page "/failedstudents"
+@using ASPNET_BLAZOR.data
+@using ASPNET_BLAZOR.Entities
+@using Microsoft.EntityFrameworkCore
+@inject MyDbContext Context
+@rendermode InteractiveServer
+
+<PageTitle>Failed Students</PageTitle>
+<h1>Failed Students</h1>
+<p>Find students who has failed a course</p>
+@if (_failedStudents.Count > 0)
+{
+    <div class="overflow-auto" style="height: 85vh">
+        <ul class="list-group">
+            @foreach (var (name, courses) in _failedStudents)
+            {
+                <li class="list-group-item">
+                    <p>@name</p>
+                    <ul class="list-group-horizontal">
+                        @foreach (var course in courses)
+                        {
+                            <li class="list-group-item">@course</li>
+                        }
+                    </ul>
+                </li>
+            }
+        </ul>
+    </div>
+}
+else
+{
+    <p>No grades found</p>
+}
+
+@code {
+    private Dictionary<string, List<string>> _failedStudents = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadGrades();
+    }
+
+    private async Task LoadGrades()
+    {
+        var grades = await Context.Grades
+            .Include(g => g.Course)
+            .Include(g => g.Student)
+            .Where(g => g.GradeValue == 'F')
+            .ToListAsync();
+        foreach (var grade in grades)
+        {
+            var student = grade.Student.Name;
+            var course = grade.Course.CourseName;
+            if (_failedStudents.ContainsKey(student))
+            {
+                _failedStudents[student].Add(course);
+            }
+            else
+            {
+                _failedStudents.Add(student, [course]);
+            }
+        }
+    }
+
+}

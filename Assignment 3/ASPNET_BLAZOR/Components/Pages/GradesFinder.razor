@@ -73,7 +73,6 @@ else
 
     private async Task LoadGrades()
     {
-        Console.WriteLine("dinkdonk");
         var possibleGrades = PossibleGrades(_selectedGrade);
         _grades = await Context.Grades.Where(g => possibleGrades.Contains(g.GradeValue)).Include(g => g.Student)
             .Include(g => g.Course).OrderBy(g => g.GradeValue).ToListAsync();
