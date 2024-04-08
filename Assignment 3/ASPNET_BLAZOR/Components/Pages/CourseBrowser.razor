@@ -1,0 +1,64 @@
+﻿@page "/coursebrowser"
+@using ASPNET_BLAZOR.data
+@using ASPNET_BLAZOR.Entities
+@using Microsoft.EntityFrameworkCore
+@inject MyDbContext Context
+@rendermode InteractiveServer
+
+<PageTitle>Course Browser</PageTitle>
+<h1>Course Browser</h1>
+<p>View students and their grades for a course</p>
+<div class="row">
+    <div id="left" class="col-md-6">
+
+        @foreach (var course in _courses)
+        {
+            <div style="padding: 3px 3px">
+                <button class="btn btn-primary " @onclick="() => LoadStudents(course)">
+                    @course.CourseName
+                </button>
+            </div>
+        }
+
+    </div>
+    <div id="right" class="col-md-6">
+        <div class="table-responsive" style="height: 80vh; overflow-y: auto;">
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark" style="position: sticky; top: 0; background-color: white;">
+                <tr>
+                    <th>Student Name</th><th>Grade</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var grade in _grades)
+                {
+                    <tr>
+                        <td>@grade.Student.Name</td><td>@grade.GradeValue</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@code {
+    List<Course> _courses = [];
+    List<Grade> _grades = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadCourses();
+    }
+
+    private async Task LoadCourses()
+    {
+        _courses = await Context.Courses.ToListAsync();
+    }
+
+    private async Task LoadStudents(Course course)
+    {
+        _grades = await Context.Grades.Where(g => g.Course == course).Include(g => g.Student).ToListAsync();
+    }
+
+}
