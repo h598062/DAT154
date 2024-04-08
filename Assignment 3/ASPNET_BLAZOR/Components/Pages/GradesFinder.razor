@@ -1,0 +1,87 @@
+﻿@page "/gradesfinder"
+@using ASPNET_BLAZOR.data
+@using ASPNET_BLAZOR.Entities
+@using Microsoft.EntityFrameworkCore
+@inject MyDbContext Context
+@rendermode InteractiveServer
+
+<PageTitle>Grades Finder</PageTitle>
+<h1>Grades Finder</h1>
+<p>Find students who has the selected grade, or better</p>
+@if (_gradeTypes.Count == 0)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <form @onsubmit="LoadGrades">
+        <select @bind="_selectedGrade" class="form-select">
+            @foreach (var grade in _gradeTypes)
+            {
+                if (grade == ' ')
+                {
+                    continue;
+                }
+
+                <option value="@grade">@grade</option>
+            }
+        </select>
+        <input type="submit"/>
+    </form>
+}
+@if (_grades.Count > 0)
+{
+    <p>Grades:</p>
+    <div class="table-responsive" style="height: 70vh; overflow-y: auto;">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th>Course Name</th><th>Student</th><th>Grade</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var grade in _grades)
+            {
+                <tr>
+                    <td>@grade.Course.CourseName</td><td>@grade.Student.Name</td><td>@grade.GradeValue</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <p>No grades found</p>
+}
+
+@code {
+    private List<char> _gradeTypes = [];
+    private List<Grade> _grades = [];
+
+    private char _selectedGrade;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadGradeTypes();
+    }
+
+    private async Task LoadGradeTypes()
+    {
+        _gradeTypes = await Context.Grades.Select(g => g.GradeValue).Distinct().ToListAsync();
+    }
+
+    private async Task LoadGrades()
+    {
+        Console.WriteLine("dinkdonk");
+        var possibleGrades = PossibleGrades(_selectedGrade);
+        _grades = await Context.Grades.Where(g => possibleGrades.Contains(g.GradeValue)).Include(g => g.Student)
+            .Include(g => g.Course).OrderBy(g => g.GradeValue).ToListAsync();
+    }
+
+    private List<char> PossibleGrades(char grade)
+    {
+        return _gradeTypes.Where(g => g <= grade).ToList();
+    }
+
+}

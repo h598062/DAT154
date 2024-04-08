@@ -9,27 +9,73 @@
 
 <h1>Search</h1>
 <p>Search for a student by name</p>
-<form @onsubmit="SearchStudents">
-    <input type="search" id="search" name="search" @bind="_searchedName" placeholder="Student name"/>
-</form>
+<div class="row">
+    <div id="left" class="col-md-6 border">
+        <form @onsubmit="SearchStudents">
+            <input type="search" id="search" name="search" @bind="_searchedName" placeholder="Student name"/>
+            <input type="submit"/>
+        </form>
 
-@if (_studentList.Count == 0)
-{
-    <p style="color: red">No students found</p>
-}
-else
-{
-    <p style="color: blue">Found @_studentList.Count students</p>
-}
-<ul>
-    @foreach (var student in _studentList)
-    {
-        <li>@student.Name - @student.Age</li>
-    }
-</ul>
+        @if (_students.Count == 0)
+        {
+            <p style="color: red">No students found</p>
+        }
+        else
+        {
+            <p style="color: blue">Found @_students.Count students</p>
+        }
+
+        <div class="overflow-auto" style="height: 70vh;">
+            <ul>
+                @foreach (var student in _students)
+                {
+                    <li>
+                        @student.Name <button class="btn btn-link" @onclick="() => LoadStudentData(student)">Details</button>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+    <div id="right" class="col-md-6 border">
+        @if (_displayedStudent != null)
+        {
+            <p>Name: @_displayedStudent.Name</p>
+            <p>Age: @_displayedStudent.Age</p>
+            <p>Id: @_displayedStudent.Id</p>
+            @if (_grades.Count > 0)
+            {
+                <p>Grades:</p>
+                <div class="table-responsive" style="height: 70vh; overflow-y: auto;">
+                    <table class="table table-bordered table-striped">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>Course Name</th><th>Grade</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var grade in _grades)
+                        {
+                            <tr>
+                                <td>@grade.Course.CourseName</td><td>@grade.GradeValue</td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <p>No grades registered for this student</p>
+            }
+        }
+    </div>
+</div>
 
 @code {
-    private List<Student> _studentList = [];
+    private List<Student> _students = [];
+    private List<Grade> _grades = [];
+
+    private Student? _displayedStudent;
 
     private string _searchedName = "";
 
@@ -39,14 +85,20 @@ else
         if (name.Length == 0)
         {
             Console.WriteLine("Empty search string");
-            _studentList = [];
+            _students = [];
             return;
         }
 
         Console.WriteLine("SearchStudents() called with name: " + name);
-        _studentList = await Context.Students
+        _students = await Context.Students
             .Where(s => s.Name.Contains(name))
             .ToListAsync();
+    }
+
+    private async Task LoadStudentData(Student student)
+    {
+        _displayedStudent = student;
+        _grades = await Context.Grades.Where(g => g.StudentId == student.Id).Include(g => g.Course).ToListAsync();
     }
 
 }
