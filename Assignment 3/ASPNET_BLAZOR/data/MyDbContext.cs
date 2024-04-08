@@ -17,8 +17,8 @@ public class MyDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Student>().ToTable("student", schema: "dbo");
-        modelBuilder.Entity<Grade>().ToTable("grade", schema: "dbo");
+        modelBuilder.Entity<Grade>().ToTable("grade", schema: "dbo")
+            .HasKey(e => new { e.StudentId, e.CourseCode });
         modelBuilder.Entity<Course>().ToTable("course", schema: "dbo");
-        modelBuilder.Entity<Grade>().HasKey(e => new { e.StudentId, e.CourseCode });
     }
 }

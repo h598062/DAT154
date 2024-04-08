@@ -2,52 +2,51 @@
 @using ASPNET_BLAZOR.data
 @using ASPNET_BLAZOR.Entities
 @using Microsoft.EntityFrameworkCore
-@inject MyDbContext mdc
+@inject MyDbContext Context
 @rendermode InteractiveServer
 
 <PageTitle>Search</PageTitle>
 
 <h1>Search</h1>
 <p>Search for a student by name</p>
-<input type="text" id="search" name="search" @bind="searchedName" placeholder="Student name" @oninput="SearchStudents" />
-@if(studentList.Count == 0)
-    {
-        <p style="color: red">No students found</p>
-    }
-    else
-    {
-        <p style="color: blue">Found @studentList.Count students</p>
-    }
+<form @onsubmit="SearchStudents">
+    <input type="search" id="search" name="search" @bind="_searchedName" placeholder="Student name"/>
+</form>
+
+@if (_studentList.Count == 0)
+{
+    <p style="color: red">No students found</p>
+}
+else
+{
+    <p style="color: blue">Found @_studentList.Count students</p>
+}
 <ul>
-    @foreach (var student in studentList)
+    @foreach (var student in _studentList)
     {
         <li>@student.Name - @student.Age</li>
     }
 </ul>
+
 @code {
-    private List<Student> studentList = new();
+    private List<Student> _studentList = [];
 
-    private string searchedName = "";
-    private CancellationTokenSource cts = new();
-
+    private string _searchedName = "";
 
     private async Task SearchStudents()
     {
-        try
+        var name = _searchedName;
+        if (name.Length == 0)
         {
-            cts.Cancel();
-            cts = new CancellationTokenSource();
-            await Task.Delay(2000, cts.Token);
-            studentList = await mdc.Students
-                .Where(s => s.Name.Contains(searchedName))
-                .ToListAsync();
-            Console.WriteLine("SearchStudents() called");
+            Console.WriteLine("Empty search string");
+            _studentList = [];
+            return;
         }
-        catch (TaskCanceledException)
-        {
-            // Ignore
-            Console.WriteLine("SearchStudents() cancelled");
-        }
+
+        Console.WriteLine("SearchStudents() called with name: " + name);
+        _studentList = await Context.Students
+            .Where(s => s.Name.Contains(name))
+            .ToListAsync();
     }
 
 }
