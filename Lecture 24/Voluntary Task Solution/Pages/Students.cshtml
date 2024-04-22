@@ -1,0 +1,47 @@
+﻿@page
+@model Voluntary_Task_Solution.Pages.Students.StudentModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Students</h1>
+
+<form method="post">
+    Name: <input type="text" name="search" />
+    Minimum Age: <input type="number" name="minage" />
+    Maximum Age: <input type="number" name="maxage" />
+    <input type="submit" />
+</form>
+
+<hr />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Student[0].Studentname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Student[0].Studentage)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Student) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Studentname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Studentage)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

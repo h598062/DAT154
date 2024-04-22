@@ -1,0 +1,18 @@
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
+
+namespace StudentWeb.Models
+{
+    public class Student {
+
+        public int ID { get; set; }
+        public string Name { get; set; }
+
+        public string Address { get; set; }
+
+        [JsonIgnore]
+        public virtual ICollection<Grade> Grades { get; set; }
+
+
+    }
+}

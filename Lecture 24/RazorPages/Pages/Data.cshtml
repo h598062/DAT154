@@ -1,0 +1,21 @@
+﻿@page
+@model RazorPages.Pages.DataModel
+@{
+
+    ViewData["Title"] = "Data Input";
+
+}
+
+<hr />
+@Html.DisplayNameFor(model => model.GetData)
+@Html.DisplayFor(model => model.GetData)
+<hr />
+
+@Html.DisplayNameFor(model => model.PostData)
+@Html.DisplayFor(model => model.PostData)
+<hr />
+<form method="post">
+    <input type="text" name="input" />
+    <input type="submit" />
+
+</form>

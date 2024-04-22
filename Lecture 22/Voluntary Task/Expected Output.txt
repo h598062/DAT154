@@ -1,0 +1,67 @@
+﻿1. Planets
+{ Name = Mercury }
+{ Name = Venus }
+{ Name = Earth }
+{ Name = Mars }
+{ Name = Jupiter }
+{ Name = Saturn }
+{ Name = Uranus }
+{ Name = Neptune }
+{ Name = Pluto }
+
+2. Moons of Jupiter
+{ Name = Metis }
+{ Name = Adrastea }
+{ Name = Amalthea }
+{ Name = Thebe }
+{ Name = Io }
+{ Name = Europa }
+{ Name = Ganymede }
+{ Name = Callisto }
+{ Name = Leda }
+{ Name = Himalia }
+{ Name = Lysithea }
+{ Name = Elara }
+{ Name = Ananke }
+{ Name = Carme }
+{ Name = Pasiphae }
+{ Name = Sinope }
+
+3. Planets by Size
+{ Name = Mercury, SizeClass = 2 }
+{ Name = Pluto, SizeClass = 2 }
+{ Name = Venus, SizeClass = 3 }
+{ Name = Earth, SizeClass = 3 }
+{ Name = Mars, SizeClass = 3 }
+{ Name = Uranus, SizeClass = 4 }
+{ Name = Neptune, SizeClass = 4 }
+{ Name = Jupiter, SizeClass = 5 }
+{ Name = Saturn, SizeClass = 5 }
+
+4. Planets by Size
+{ Name = Mercury, Text = Small }
+{ Name = Pluto, Text = Small }
+{ Name = Venus, Text = Medium }
+{ Name = Earth, Text = Medium }
+{ Name = Mars, Text = Medium }
+{ Name = Uranus, Text = Large }
+{ Name = Neptune, Text = Large }
+{ Name = Jupiter, Text = Huge }
+{ Name = Saturn, Text = Huge }
+
+5. Counting Moons
+{ Name = Mercury, Moons = 0 }
+{ Name = Venus, Moons = 0 }
+{ Name = Earth, Moons = 1 }
+{ Name = Mars, Moons = 2 }
+{ Name = Jupiter, Moons = 16 }
+{ Name = Saturn, Moons = 18 }
+{ Name = Uranus, Moons = 20 }
+{ Name = Neptune, Moons = 8 }
+{ Name = Pluto, Moons = 3 }
+
+6. Planets with T-Moons
+{ Name = Jupiter, T_Moons = 1 }
+{ Name = Saturn, T_Moons = 3 }
+{ Name = Uranus, T_Moons = 1 }
+{ Name = Neptune, T_Moons = 2 }
