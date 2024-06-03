@@ -1,0 +1,42 @@
+﻿@page
+@model Web.Pages._2.StudentsByCourseModel
+
+@{
+    ViewData["Title"] = "Students By Course";
+}
+
+<h1>Students By Course</h1>
+
+<p>
+    
+    <form method="post">
+        <select name="courseId" asp-items="Model.Courses"></select>
+        <button type="submit" asp-page-handler="SearchStudents">Search</button>
+    </form>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Grade[0].Student.Studentname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Grade[0].Grade1)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Grade) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Student.Studentname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Grade1)
+            </td>
+
+        </tr>
+}
+    </tbody>
+</table>

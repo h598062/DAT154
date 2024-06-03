@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SpaceSim.MAUI.SimPage">
+
+    <Grid>
+        <GraphicsView x:Name="animationContainer" />
+        <Button Text="+" Clicked="SpeedUp" Margin="0,50,50,50" HorizontalOptions="Start" VerticalOptions="Start"/>
+        <Button Text="-" Clicked="SlowDown" Margin="50,50,100,50" HorizontalOptions="Start" VerticalOptions="Start"/>
+        <Label x:Name="SimSpeedInfo" TextColor="AntiqueWhite" Text="" Margin="100,50,200,50" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="StartAndExpand"/>
+
+        <Button Text="+" Clicked="ZoomIn" Margin="0,100,50,100" HorizontalOptions="Start" VerticalOptions="Start"/>
+        <Button Text="-" Clicked="ZoomOut" Margin="50,100,100,100" HorizontalOptions="Start" VerticalOptions="Start"/>
+        <Label TextColor="AntiqueWhite" Text="Change Zoom Level" Margin="100,100,200,100" HorizontalTextAlignment="Center" VerticalTextAlignment="Start" HorizontalOptions="Start" VerticalOptions="StartAndExpand"/>
+
+
+        <HorizontalStackLayout BackgroundColor="DarkGray" HeightRequest="50" VerticalOptions="Start" HorizontalOptions="StartAndExpand">
+            <Picker TextColor="AliceBlue" x:Name="selectCentral" />
+            <Label TextColor="AntiqueWhite" Text="Names" Padding="15,0,5,0" VerticalTextAlignment="Center"/>
+            <Switch IsToggled="false" x:Name="nameSwitch"/>
+            <Label TextColor="AntiqueWhite" Text="Orbits" Padding="15,0,5,0" VerticalTextAlignment="Center" />
+            <Switch IsToggled="false" x:Name="orbitSwitch"/>
+        </HorizontalStackLayout>
+
+        <Label Text="test" x:Name="PlanetInfo" VerticalTextAlignment="End" TextColor="AntiqueWhite" VerticalOptions="EndAndExpand" HorizontalOptions="StartAndExpand"  Margin="10,0,0,0" />
+    </Grid>
+
+</ContentPage>

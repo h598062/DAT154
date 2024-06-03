@@ -1,0 +1,46 @@
+﻿@page
+@model Web.Pages._1.SearchStudentsModel
+
+@{
+    ViewData["Title"] = "Search Students";
+}
+
+<h1>SearchStudents</h1>
+
+<p>
+    <form method="post">
+        <input type="search" name="searchStudent" />
+        <button type="submit" asp-page-handler="SearchStudents">Search</button>
+    </form>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Student[0].Studentname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Student[0].Studentage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Student[0].Id)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Student) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Studentname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Studentage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

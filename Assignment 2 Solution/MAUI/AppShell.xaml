@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="SpaceSim.MAUI.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:SpaceSim.MAUI"
+    Shell.FlyoutBehavior="Disabled">
+
+    <ShellContent
+        Title="Space Simulator"
+        ContentTemplate="{DataTemplate local:SimPage}"
+        Route="MainPage" />
+
+</Shell>
